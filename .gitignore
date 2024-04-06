@@ -310,3 +310,10 @@ placeholder_file.txt
 
 # Ignore PureRef files
 .pur
+
+# Ignore AEP auto-save files
+**auto-save**
+
+# Ignore Log folders
+**/*Logs/
+**/*Log/
