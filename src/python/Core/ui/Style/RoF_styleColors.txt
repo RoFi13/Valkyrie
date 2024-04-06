@@ -1,0 +1,19 @@
+RF_styleColors
+
+Base Pale Blue Color
+#4797ed
+
+Button hover over (light blue)
+#00ffff
+
+Off-white
+#f7f7f7
+
+Dark Gray
+#323232
+
+List widget selection (pale dark blue)
+#587080
+
+Active spinbox border
+#5c8391

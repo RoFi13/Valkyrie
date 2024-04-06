@@ -1,0 +1,322 @@
+/*
+Qt6 Stylesheet for dark theme with a modern and minimalist design.
+Accent Colors: #333333 (Blue)
+Neutral Colors: #272626 (Dark Gray), #5A5858 (Medium Gray), #FDFCFC (Off White)
+*/
+
+QWidget {
+    background-color: #272626;
+    /* Dark Gray background for most widgets */
+    color: #FDFCFC;
+    /* Off White text color for better readability */
+}
+
+QLabel,
+QCheckBox,
+QRadioButton,
+QPushButton,
+QLineEdit {
+    color: #FDFCFC;
+    /* Off White text for labels and buttons */
+}
+
+QGroupBox {
+    border: 2px solid #5A5858;
+    /* Medium Gray border, to match the theme */
+    border-radius: 5px;
+    /* Slightly rounded corners for a softer look */
+    margin-top: 20px;
+    /* Ensures there's space at the top for the title */
+    background-color: #272626;
+    /* Dark Gray background, matching the theme */
+    color: #FDFCFC;
+    /* Off White text color for readability */
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    /* Aligns the title within the defined margin */
+    subcontrol-position: top center;
+    /* Positions the title at the top center */
+    padding: 0 10px;
+    /* Padding on the sides of the title for better spacing */
+    color: #FDFCFC;
+    /* Off White for the title text to stand out */
+}
+
+
+QPushButton {
+    background-color: #333333;
+    /* Blue background for buttons */
+    border-style: solid;
+    border-width: 1px;
+    border-color: #5A5858;
+    padding: 5px;
+    border-radius: 10px;
+    /* Slightly rounded corners for buttons */
+    color: #FDFCFC;
+    /* Off White text for better readability */
+
+    /* Gradient background for a subtle 3D effect */
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+            stop: 0 #4a4a4a, stop: 1 #333333);
+
+}
+
+QPushButton:hover {
+    /* Lighter gradient on hover for a subtle interactive effect */
+    background: #24a7f2;
+    /* background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+            stop: 0 #7DAFEE, stop: 1 #4a4a4a); */
+}
+
+QPushButton:pressed {
+    /* Adjust gradient for a pressed-in effect */
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+            stop: 0 #336699, stop: 1 #333333);
+
+    /* Change border style to simulate being pressed */
+    border-color: #336699;
+    border-style: inset;
+    /* This gives the illusion that the button is pressed down */
+}
+
+QPushButton:disabled {
+    background-color: #3A3A3A;
+    /* Darker background for disabled state */
+    color: #5A5858;
+    /* Medium gray text to indicate it's disabled */
+    border-color: #444;
+    /* Darker border for disabled buttons */
+}
+
+
+QLineEdit {
+    border: 1px solid #5A5858;
+    /* Medium Gray border for line edits */
+    padding: 2px;
+    background-color: #3A3A3A;
+    /* Slightly lighter gray for edit backgrounds */
+}
+
+QMenuBar {
+    background-color: #272626;
+    /* Dark Gray for menu bar */
+    color: #FDFCFC;
+    /* Off White text in menu bar */
+}
+
+QMenuBar::item {
+    background-color: #272626;
+    color: #FDFCFC;
+}
+
+QMenuBar::item:selected {
+    background-color: #333333;
+    /* Blue background for selected menu items */
+    color: #FDFCFC;
+}
+
+QMenu {
+    background-color: #272626;
+    /* Dark Gray for menus */
+    color: #FDFCFC;
+    /* Off White text in menus */
+}
+
+QMenu::item:selected {
+    background-color: #333333;
+    /* Blue background for selected items */
+}
+
+QScrollBar:vertical {
+    border: 0px solid #272626;
+    background: #272626;
+    width: 10px;
+}
+
+QScrollBar::handle:vertical {
+    background: #5A5858;
+    /* Medium Gray scrollbar handle */
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    background: none;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+QComboBox {
+    border: 1px solid #5A5858;
+    /* Medium Gray border */
+    background-color: #272626;
+    /* Dark Gray background */
+    color: #FDFCFC;
+    /* Off White text */
+    padding: 1px 18px 1px 3px;
+    /* Proper padding for text and arrow */
+    min-height: 25px;
+    /* Ensures the combo box is not too small */
+}
+
+QComboBox:hover {
+    border: 1px solid #4b4b4b;
+    /* Accent color border on hover */
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 32px;
+    /* Width of the drop-down button */
+    border-left-width: 1px;
+    border-left-color: #5A5858;
+    /* Medium Gray border for the separator */
+    border-left-style: solid;
+    /* Makes sure there is a separation line */
+    border-top-right-radius: 3px;
+    /* Rounded corners for the top right */
+    border-bottom-right-radius: 3px;
+    /* And bottom right */
+}
+
+QComboBox::down-arrow {
+    image: url(shared_icons:dropdown_arrow_icon.png);
+}
+
+QComboBox::down-arrow:on {
+    top: 1px;
+    left: 1px;
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid #333333;
+    /* Accent color border for the item view */
+    background-color: #272626;
+    /* Dark Gray background */
+    color: #FDFCFC;
+    /* Off White text */
+    selection-background-color: #333333;
+    /* Accent color for selection */
+    selection-color: #FDFCFC;
+    /* Off White text for selected item */
+    outline: 0;
+    /* Remove the focus outline to maintain a clean look */
+}
+
+QListWidget {
+    background-color: #272626;
+    /* Dark Gray background, to match the theme */
+    color: #FDFCFC;
+    /* Off White text for better readability */
+    border: 1px solid #5A5858;
+    /* Medium Gray border to match the theme */
+}
+
+QListWidget::item {
+    padding: 1px;
+    /* Padding for each item for a better visual appearance */
+    border-radius: 2px;
+    /* Slightly rounded corners for each item */
+}
+
+QListWidget::item:selected {
+    background-color: #24a7f2;
+    /* Bright blue background for selected items */
+    color: #FDFCFC;
+    /* Keeping the text color consistent, but you can change it if needed */
+}
+
+QListWidget::item:selected:!active {
+    background-color: #24a7f2;
+    /* To ensure the selection color remains even when the widget is not focused */
+}
+
+QTabWidget::pane {
+    border-top: 2px solid #5A5858;
+    /* Medium Gray line above the tab content */
+    background-color: #272626;
+    /* Dark Gray background, to match the theme */
+}
+
+QTabWidget::tab-bar {
+    left: 5px;
+    /* Move the tabs a bit to the right for styling */
+}
+
+QTabBar::tab {
+    background-color: #272626;
+    /* Dark Gray background for the tabs */
+    color: #FDFCFC;
+    /* Off White text color */
+    padding: 5px;
+    /* Padding around the text for a better appearance */
+    border: 1px solid #5A5858;
+    /* Medium Gray border to match other elements */
+    border-bottom-color: #272626;
+    /* Makes the tab seem connected to its content */
+    min-width: 80px;
+    /* Minimum width for better appearance */
+    margin-right: 2px;
+    /* Small gap between tabs */
+    border-top-left-radius: 4px;
+    /* Rounded corners for a modern look */
+    border-top-right-radius: 4px;
+}
+
+QTabBar::tab:selected {
+    background-color: #4d88e8;
+    /* Accent color for selected or hovered tabs */
+    color: #FDFCFC;
+    border-color: #4d88e8;
+    /* Accent color border to match */
+    border-bottom-color: #272626;
+    /* Maintain the appearance of being connected to the content */
+}
+
+QTabBar::tab:hover {
+    background-color: #d6d6d6;
+    /* Accent color forgb(184, 184, 184)ted or hovered tabs */
+    color: #2f2f2f;
+    border-color: #4d88e8;
+    /* Accent color border to match */
+    border-bottom-color: #272626;
+    /* Maintain the appearance of being connected to the content */
+}
+
+QTabBar::tab:!selected {
+    margin-top: 4px;
+    /* Unselected tabs are slightly lower */
+}
+
+QTabBar::tab:selected {
+    margin-top: 0px;
+    /* Selected tab aligns flush with the pane border */
+}
+
+/* Optional: Style the close button on tabs, if you have them */
+/* QTabBar::close-button {
+    image: url(:/icons/close.svg);
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+} */
+
+/* Horizontal Line */
+QFrame[frameShape="4"] { /* 4 corresponds to QFrame::HLine */
+    background-color: #989898; /* Accent color */
+    height: 1px; /* Thickness of the horizontal line */
+    margin: 5px 0px; /* Vertical margin, adjust as needed */
+}
+
+/* Vertical Line */
+QFrame[frameShape="5"] { /* 5 corresponds to QFrame::VLine */
+    background-color: #989898; /* Accent color */
+    width: 1px; /* Thickness of the vertical line */
+    margin: 0px 5px; /* Horizontal margin, adjust as needed */
+}
