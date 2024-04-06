@@ -1,0 +1,8 @@
+[project]
+name = [ "P", "R", "O", "J", "E", "C", "T", "_", "N", "A", "M", "E",]
+dynamic = [ [ "v", "e", "r", "s", "i", "o", "n",], [ "r", "e", "a", "d", "m", "e",],]
+requires-python = [ ">", "=", "3", ".", "7",]
+license = [ "L", "I", "C", "E", "N", "S", "E",]
+[[project.authors]]
+name = [ "B", "o", "b",]
+

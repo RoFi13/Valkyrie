@@ -1,0 +1,19 @@
+# Setup following https://setuptools.pypa.io/en/latest/userguide/quickstart.html
+[project]
+name = "TDF-Pipe"
+dynamic = ["version", "readme"]
+
+[tool.setuptools.dynamic]
+version = {file = "[VERSION]"}
+readme = {file = ["README.md"]}
+
+[tool.setuptools.packages]
+find = {}
+
+[tool.flake8]
+exclude = ".svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.nox,.eggs,.*.egg,artifacts,artist,_archive,mel,.venv,venv,.*_dev.*,[tT]hirdParty"
+max-line-length = 88
+
+[tool.black]
+line-length = 88
+extend-exclude = ".bzr|.pytest_cache|.vscode|__pycache__|_archive|artifacts|artist|CVS|mel|venv|.venv|.*.egg|.*_dev.*|[tT]hirdParty"
