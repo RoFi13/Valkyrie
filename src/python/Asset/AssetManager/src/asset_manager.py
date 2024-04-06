@@ -200,7 +200,7 @@ class AssetManager(QtWidgets.QMainWindow):
         self.publish_preview_widget = self.root.publish_section_HL.itemAt(0).widget()
 
     # pylint: disable=pointless-string-statement
-    """FUTURE ROB: When publishing asset, try to auto fill for artist the used
+    """TODO: When publishing asset, try to auto fill for artist the used
     zbrush and substance files associated with the publish. Save these paths with
     the published metadata. This way we can look at which substance and zbrush files
     were used with that published version more easily."""
@@ -392,12 +392,10 @@ class AssetManager(QtWidgets.QMainWindow):
 
         Args:
             asset_details (dict): Asset details data as follows:
-            {
                 "asset_category" (str): "Name of Asset Category,
                 "asset_name" (str): Name of Asset,
                 "asset_variant" (str): Name of Asset Variant,
                 "file_path" (str): File path if chosen. Otherwise is None
-            }
 
         Returns:
             str: Path to newly created asset's variant root folder.
@@ -433,12 +431,10 @@ class AssetManager(QtWidgets.QMainWindow):
 
         Returns:
             dict: Return the final maya file details in the following format:
-            {
                 "version": Version string i.e. "v001",
                 "file_path": Final maya file path name,
                 "textures_directory": APB textures version directory
-                    i.e. Maya/Textures/v001
-            }
+                i.e. Maya/Textures/v001
         """
         apb_maya_directory = f"{asset_variant_path}/APB/Maya"
         apb_files = fut.get_files_or_folders(
@@ -498,12 +494,10 @@ class AssetManager(QtWidgets.QMainWindow):
 
         Returns:
             dict: Return the final maya file details in the following format:
-            {
                 "version": Version string i.e. "v001",
                 "file_path": Final maya file path name,
                 "textures_directory": Publish textures version directory
-                    i.e. Publish/v001/Textures
-            }
+                i.e. Publish/v001/Textures
         """
         asset_structure = "MDL"
         if utt.check_scene_for_joints() is True:
