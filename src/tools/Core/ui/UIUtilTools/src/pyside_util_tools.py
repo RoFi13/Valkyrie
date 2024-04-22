@@ -1,5 +1,6 @@
 # Copyright (C) 2023 Robert Wiese - All Rights Reserved.
 """Various Project utility functions."""
+
 # Can't find PySide2 modules pylint: disable=I1101
 # create_progress_bar
 # update_progress_bar
@@ -22,7 +23,7 @@ LOADER = QUiLoader()
 # Main paths
 MAIN_PATHS = cpath.core_paths()
 
-LOG = logging.getLogger("pyside_util_tools")
+LOG = logging.getLogger(os.path.basename(__file__))
 
 
 def setup_class_ui(
@@ -38,15 +39,14 @@ def setup_class_ui(
         window_object_name (str): Window object name in memory.
         window_title (str): Window title.
         ui_details (dict): UI details in dictionary as follows:
-            {
-                "main_ui_file": "String path to main class UI file.",
-                "min_size": [x: int, y: int],
-                "max_size": [x: int, y: int]
-            }
+            'main_ui_file': 'String path to main class UI file.'
+            'min_size': [x: int, y: int]
+            'max_size': [x: int, y: int]
 
     Returns:
         QWidget: Main tool widget.
     """
+
     # Set object name and window title
     tool_object.setObjectName(window_object_name)
     tool_object.setWindowTitle(window_title)
@@ -89,21 +89,20 @@ def update_combobox(
     reverse_sort=False,
     clear=True,
 ):
-    """Update supplied combobox with new options.
+    """_summary_
 
     Args:
-        combobox (QComboBox): Combobox to update.
-        new_options (list): List of new string options for combobox.
-        sort_options (bool, optional): Whether to sort the new options.
+        combobox (QComboBox): _description_
+        new_options (list): _description_
+        sort_options (bool, optional): _description_. fdaf da fdaf dafda fdaf daf daf d.
             Defaults to False.
-        reverse_sort (bool, optional): Whether to reverse the sorting.
-            Defaults to False.
-        clear (bool, optional): Whether to clear the existing options in the combox.
-            Defaults to True.
+        reverse_sort (bool, optional): _description_. Defaults to False.
+        clear (bool, optional): _description_. Defaults to True.
 
     Returns:
-        bool: Returns True if successfully added options. Otherwise, False.
+        _type_: _description_
     """
+
     if len(new_options) == 0:
         LOG.warning("List of new options is empty.")
         return False
@@ -127,6 +126,7 @@ def set_label_pixmap(label: QtWidgets.QLabel, image_path: str):
         label (QtWidgets.qLabel): QLabel object to change image for.
         image_path (str): Image file path.
     """
+
     new_pixmap = QtGui.QPixmap(image_path)
     label.setPixmap(new_pixmap)
     label.setScaledContents(True)
@@ -149,6 +149,7 @@ def create_progress_bar(
     Returns:
         QWidget of newly create progress bar.
     """
+
     progress_bar = QProgressDialog(
         title, None, 0, number_of_operations, parent_ui_object
     )
@@ -168,6 +169,7 @@ def update_progress_bar(progress_bar: QtWidgets.QProgressDialog, new_label: str 
         progress_bar (QtWidgets.QProgressDialo): Object of progress bar.
         new_label (str): New value for the progress bar.
     """
+
     progress_bar.setValue(progress_bar.value() + 1)
 
     if new_label is not None:

@@ -15,6 +15,7 @@ from Core.ui.UIUtilTools.src import pyside_util_tools as put
 from Core.util import file_util_tools as fut
 
 from Asset.AssetManager.src.util import asset_manager_utils as amu
+from Asset.AssetManager.src.util import valkyrie_asset as val
 
 from . import asset_widget_item as awi
 from . import file_widget_item as fwi
@@ -69,55 +70,50 @@ def update_asset_list(
         return
 
     for asset in asset_names:
-        asset_details = {
-            "asset_name": None,
-            "asset_path": None,
-            "asset_preview": None,
-            "asset_metadata": None,
-            "asset_variations": {},
-        }
-
-        asset_details["asset_name"] = asset
-        # Get asset path
         asset_path = f"{asset_category_path}/{asset}"
-        asset_details["asset_path"] = asset_path
-        # Get asset preview
-        asset_details["asset_preview"] = amu.get_asset_preview(asset_path, asset)
 
-        amu.get_asset_variations(asset_details)
+        new_asset_object = val.ValkyrieAsset(asset)
+        new_asset_object.set_asset_path(asset_path)
+        new_asset_object.set_asset_preview_path(
+            amu.get_asset_preview(asset_path, asset)
+        )
 
-        add_asset_widget(tool_object, asset_details)
+        # asset_details = {
+        #     "asset_name": None,
+        #     "asset_path": None,
+        #     "asset_preview": None,
+        #     "asset_metadata": None,
+        #     "asset_variations": {},
+        # }
+
+        # asset_details["asset_name"] = asset
+        # # Get asset path
+        # asset_path = f"{asset_category_path}/{asset}"
+        # asset_details["asset_path"] = asset_path
+        # # Get asset preview
+        # asset_details["asset_preview"] = amu.get_asset_preview(asset_path, asset)
+
+        # amu.get_asset_variations(asset_details)
+        amu.get_asset_variations(new_asset_object)
+
+        # add_asset_widget(tool_object, asset_details)
+        add_asset_widget(tool_object, new_asset_object)
 
 
+# def add_asset_widget(tool_object: QMainWindow, asset_details: val.ValkyrieAsset):
 def add_asset_widget(tool_object: QMainWindow, asset_details: dict):
     """Add Asset as widget to main asset list widget.
 
+    The dictionary returned is in the following format:
+
     Args:
         tool_object (QMainWindow): Asset Manager tool object.
-        asset_details (dict): Asset detailed information in the following format:
-        {
-            "asset_name": (str) Asset Name,
-            "asset_path": (str) Path to root of Asset folder,
-            "asset_preview": (str) Path to asset jpg preview image,
-            "asset_metadata": (str) Path to asset metadata JSON file,
-            "asset_variations": {
-                "<variation_name>": {
-                    "published_versions": {
-                        "<version>": {
-                            "maya_file": "/path/to/published_maya_file.mb",
-                            "version_preview": "path/to/published_preview_image.jpg"
-                        }
-                    },
-                    "apb_versions": (list(str)) Paths to all wip/apb maya files for
-                        variation.
-                    }
-                }
-            }
-        }
+        asset_details (dict): Asset's detailed information.
 
     Returns:
         QListWidgetItem: New list widget item for Asset.
     """
+
     asset_widget_path = tool_object.ui_settings["asset_widget"]
 
     # Add widget to list widget

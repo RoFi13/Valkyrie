@@ -42,9 +42,9 @@ from maya import cmds
 from maya import mel
 from maya import utils as util
 
-# from python.asset.AssetUtils import ghost_shapes_util as gsu
-# from python.unrealUtilities import unreal_utilities as uu
-# from python.util.virusCleanup import virus_cleanup as vc
+# from tools.asset.AssetUtils import ghost_shapes_util as gsu
+# from tools.unrealUtilities import unreal_utilities as uu
+# from tools.util.virusCleanup import virus_cleanup as vc
 
 from importlib import reload
 

@@ -86,7 +86,7 @@ naming conventions, version padding, etc.
 ### MAYA ASSET HIERARCHY
 
 Let's cover the basic Maya Asset folder hierachy. This hierarchy is automatically
-created and managed by the [**Asset Manager**](src/python/Asset/AssetManager/README.md)
+created and managed by the [**Asset Manager**](src/tools/Asset/AssetManager/README.md)
 tool.
 
 ### UE FOLDER

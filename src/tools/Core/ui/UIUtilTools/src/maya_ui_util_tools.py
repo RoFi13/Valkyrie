@@ -1,5 +1,6 @@
 # Copyright (C) 2023 Robert Wiese - All Rights Reserved.
 """Various Maya UI utility functions"""
+
 # Can't find PySide2 modules pylint: disable=I1101
 
 import logging
@@ -7,7 +8,7 @@ import os
 
 from maya import cmds
 
-LOG = logging.getLogger("maya_ui_util_tools")
+LOG = logging.getLogger(os.path.basename(__file__))
 
 
 def browse_dialog_maya_files(start_dir: str, line_widget=None):
@@ -18,9 +19,10 @@ def browse_dialog_maya_files(start_dir: str, line_widget=None):
         line_widget (obj): Line widget to set the path of file.
 
     Returns:
-        str: The file at the given path. If start_dir path doesn't exist, returns
-            empty string.
+        str: The file at the given path. If start_dir path doesn't exist,
+            returns empty string.
     """
+
     if not os.path.exists(start_dir):
         LOG.warning("Starting directory doesn't exist here: %s", start_dir)
         return ""
@@ -51,10 +53,11 @@ def display_confirm_dialog(
     Args:
         title (str): Title of confirm dialog window.
         message (str): Message of confirm dialog window.
-        buttons (list): List of button names user can press. Defaults to ["Ok"]
-        default_button (str): Default string button for default, cancel, and dismiss.
-            Defaults to "Ok".
+        buttons (list): List of button names user can press. Defaults to ['Ok'].
+        default_button (str): Default string button for default, cancel, and
+            dismiss. Defaults to 'Ok'.
     """
+
     if buttons is None:
         buttons = ["Ok"]
 

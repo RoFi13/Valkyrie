@@ -33,7 +33,7 @@ from P4 import P4, P4Exception
 
 from Core import core_paths as cpath
 
-from src.python.Core.util import file_util_tools as fut
+from src.tools.Core.util import file_util_tools as fut
 
 LOG = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ def create_db_task():
 
     changed_files = [
         (
-            f"//{p4.client}/DCC/Pipe/src/python/Perforce/DatabaseTasks/tasks/"
+            f"//{p4.client}/DCC/Pipe/src/tools/Perforce/DatabaseTasks/tasks/"
             "test_data.json"
         )
     ]

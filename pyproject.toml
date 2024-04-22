@@ -1,6 +1,6 @@
 # Setup following https://setuptools.pypa.io/en/latest/userguide/quickstart.html
 [project]
-name = "TDF-Pipe"
+name = "Valkyrie"
 dynamic = ["version", "readme"]
 
 [tool.setuptools.dynamic]

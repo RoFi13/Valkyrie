@@ -21,8 +21,8 @@ reload(bpb)
 from maya import mel
 import maya.utils as mutil
 
-# from python.util.AfterEffectsUtils.src import copy_dneg_ae_tools as dae
-# from python.util.virusCleanup import virus_cleanup as vc
+# from tools.util.AfterEffectsUtils.src import copy_dneg_ae_tools as dae
+# from tools.util.virusCleanup import virus_cleanup as vc
 
 from src import setup_logging as sl
 

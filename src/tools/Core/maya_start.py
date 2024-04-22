@@ -21,19 +21,20 @@ def maya_delete_ui(window_object, window_title):
     """Delete existing UI in Maya.
 
     Args:
-        window_object (str): object name
-        window_title (str): window title
+        window_object (str): Object name.
+        window_title (str): Window title.
     """
+
     if cmds.window(window_object, query=True, exists=True):
-        logging.info("Found existing tool window for %s. Deleting UI...", window_object)
+        LOG.info("Found existing tool window for %s. Deleting UI...", window_object)
         cmds.deleteUI(window_object)  # Delete window
 
-    logging.info("Checking for docked tool window...")
+    LOG.info("Checking for docked tool window...")
     if cmds.dockControl("MayaWindow|" + window_title, query=True, exists=True):
-        logging.info("Found existing dock window for %s. Deleting UI...", window_title)
+        LOG.info("Found existing dock window for %s. Deleting UI...", window_title)
         cmds.deleteUI("MayaWindow|" + window_title)  # Delete docked window
 
-    logging.info("Existing tool window %s not found.", window_title)
+    LOG.info("Existing tool window %s not found.", window_title)
 
 
 def maya_main_window():
@@ -41,7 +42,7 @@ def maya_main_window():
     maya_window_object = None
     for obj in QApplication.topLevelWidgets():
         if obj.objectName() == "MayaWindow":
-            logging.info("Found MayaWindow instance.")
+            LOG.info("Found MayaWindow instance.")
             maya_window_object = obj
             break
 
@@ -59,13 +60,18 @@ def run_maya(
 
     Args:
         tool_class (obj): Tool class object to instantiate from
-        window_object (str): object name
-        window_title (str): window title
-        dock_with_maya_ui (bool): Whether to launch tool as a dockable utility
-            window
-        kwargs (dict): passing an arbitrary number of keyword arguments to the
-            function
+        window_object (str): object name.
+        window_title (str): window title.
+        dock_with_maya_ui (bool): Whether to launch tool as a dockable utility window.
+        kwargs (dict): passing an arbitrary number of keyword arguments to the function.
+
+    Raises:
+        RuntimeError: Raised if no valid MayaWindow object is found.
+
+    Returns:
+        QMainWindow: Created Window object of tool being instantiated.
     """
+
     maya_window = maya_main_window()
     if maya_window is None:
         raise RuntimeError("No valid MayaWindow instance found.")
@@ -82,7 +88,7 @@ def run_maya(
     # make Maya remember the window position
     property_result = tool_object.setProperty("saveWindowPref", True)
     if property_result is not True:
-        logging.info("Maya saveWindowPref property not found or set.")
+        LOG.info("Maya saveWindowPref property not found or set.")
 
     if dock_with_maya_ui:
         allowed_areas = ["right", "left"]

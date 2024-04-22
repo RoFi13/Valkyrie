@@ -107,10 +107,11 @@ def publish_ui_reset(tool_object: QMainWindow):
     """Reset Publish section of the UI to default state.
 
     Does the following reset:
-        1. Reset Publish preview snipping image to default image.
-        2. Set check state to unchecked for the Make Image Main Preview.
-        3. Clears text for Publish Asset Name field.
-        3. Clears text for Publish Asset Variant field.
+
+    1. Reset Publish preview snipping image to default image.
+    2. Set check state to unchecked for the Make Image Main Preview.
+    3. Clears text for Publish Asset Name field.
+    4. Clears text for Publish Asset Variant field.
 
     Args:
         tool_object (QMainWindow): Main tool window object.

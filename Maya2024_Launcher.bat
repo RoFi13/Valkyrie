@@ -7,8 +7,8 @@ set CURRENT_ENV=prod
 rem \---- Virtual env site-packages
 set SITE_PACKAGES=%REPO_PATH%sitepackages
 
-rem \---- Python Root
-set PYTHONROOT=%REPO_PATH%src\python
+rem \---- Python Tools Root
+set PYTHONROOT=%REPO_PATH%src\tools
 
 rem \---- MEL root
 set MAYA_SCRIPT_PATH=%REPO_PATH%src\mel

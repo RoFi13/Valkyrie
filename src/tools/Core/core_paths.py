@@ -25,8 +25,8 @@ def core_paths():
     ue_path = f"{pure_repo_path.parents[1]}/UE".replace("\\", "/")
     cg_project_path = f"{dcc_path}/CG".replace("\\", "/")
     src_path = f"{repo_path}/src"
-    python_path = f"{src_path}/python"
-    core_path = f"{python_path}/Core"
+    python_tools_path = f"{src_path}/tools"
+    core_path = f"{python_tools_path}/Core"
     shared_icons_path = f"{core_path}/icons"
     logs_directory = f"{src_path}/logs"
     configs_directory = f"{src_path}/config"
@@ -58,7 +58,7 @@ def core_paths():
         "ue": ue_path,
         "cg_path": cg_project_path,
         "src": src_path,
-        "python": python_path,
+        "python_tools_path": python_tools_path,
         "core": core_path,
         "shared_icons": shared_icons_path,
         "logs": logs_directory,
