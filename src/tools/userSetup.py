@@ -8,13 +8,9 @@ the Previs Menu in Maya.
 # This file needs to be stay as userSetup.py for Maya to recognize on launch
 # to run this code.
 import logging
-import os
 
 from Core.menu.PipeMenu.src import build_pipe_menu as pipe
 from Core.ui.MayaCustomization.src import build_project_banner as bpb
-from importlib import reload
-
-reload(bpb)
 
 # from core.shelves.DnegPrevisShelf.src import build_dneg_previs_shelf as bdn
 

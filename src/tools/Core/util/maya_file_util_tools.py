@@ -17,10 +17,6 @@ from maya import cmds
 
 LOG = logging.getLogger(os.path.basename(__file__))
 
-from importlib import reload
-
-reload(put)
-
 
 def create_from_current_scene(save_file_path):
     """Create wip binary file from current scene open in maya.

@@ -1,48 +1,17 @@
 # Copyright (C) 2023 Robert Wiese - All Rights Reserved.
-"""Custom File Widget QListWidgetItem class.
+"""Custom File Widget QListWidgetItem class."""
 
-The asset_details dict often used in this file is of the following format:
-{
-    "asset_name": "AssetName",
-    "asset_path": "../Path/to/asset/root/folder,
-    "asset_preview": "../Path/to/asset/root/preview.jpg,
-    "asset_metadata": "../Path/to/asset/root/AssetName_metadata.json,
-    "asset_variations": {
-        "<variationName>": {
-            "published_versions": {
-                "<version>": {
-                    "maya_file": "../Path/to/published_maya_file.mb",
-                    "version_preview": "../Path/to/published_preview_image.jpg"
-                }
-            }
-            "apb_versions": [
-                "../Path/to/apb_file_v001.mb",
-                "../Path/to/apb_file_v002.mb"
-            ]
-        }
-    }
-}
-"""
 # Can't find PySide2 modules pylint: disable=I1101
 
 import logging
 import os
-from importlib import reload
 
 from PySide6 import QtWidgets
 
 from Core import core_paths as cpath
-from Core.util import file_util_tools as fut
 from Core.util import maya_file_util_tools as mut
 
-from Asset.AssetManager.src.util import asset_manager_utils as amu
-
 from . import asset_widget_item as awi
-
-reload(fut)
-reload(mut)
-reload(awi)
-reload(amu)
 
 # Main paths
 MAIN_PATHS = cpath.core_paths()

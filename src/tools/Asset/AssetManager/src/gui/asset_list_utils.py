@@ -20,14 +20,6 @@ from Asset.AssetManager.src.util import valkyrie_asset as val
 from . import asset_widget_item as awi
 from . import file_widget_item as fwi
 
-from importlib import reload
-
-reload(fut)
-reload(fwi)
-reload(awi)
-reload(fwi)
-reload(amu)
-
 LOADER = QUiLoader()
 
 # Main paths
@@ -54,7 +46,19 @@ def update_asset_list(
     """
     LOG.debug("Project Assets root directory: %s", tool_object.asset_root_directory)
 
+    # Reset UI panels
     tool_object.root.list_asset_previews.clear()
+    tool_object.root.list_published_files.clear()
+    tool_object.root.list_apb_files.clear()
+    tool_object.root.cbo_variations.clear()
+    # Update default variation preview image
+    put.set_label_pixmap(
+        tool_object.root.lbl_variation_preview,
+        f"{RSRC_PATH}/images/Select_file_preview.png",
+    )
+    tool_object.current_variation_preview = (
+        f"{RSRC_PATH}/images/Select_file_preview.png"
+    )
 
     asset_root_directory = tool_object.asset_root_directory
     asset_category = tool_object.root.cbo_categories.currentText()
@@ -72,43 +76,24 @@ def update_asset_list(
     for asset in asset_names:
         asset_path = f"{asset_category_path}/{asset}"
 
-        new_asset_object = val.ValkyrieAsset(asset)
-        new_asset_object.set_asset_path(asset_path)
+        new_asset_object = val.ValkyrieAsset(asset, asset_path)
         new_asset_object.set_asset_preview_path(
             amu.get_asset_preview(asset_path, asset)
         )
 
-        # asset_details = {
-        #     "asset_name": None,
-        #     "asset_path": None,
-        #     "asset_preview": None,
-        #     "asset_metadata": None,
-        #     "asset_variations": {},
-        # }
-
-        # asset_details["asset_name"] = asset
-        # # Get asset path
-        # asset_path = f"{asset_category_path}/{asset}"
-        # asset_details["asset_path"] = asset_path
-        # # Get asset preview
-        # asset_details["asset_preview"] = amu.get_asset_preview(asset_path, asset)
-
-        # amu.get_asset_variations(asset_details)
         amu.get_asset_variations(new_asset_object)
 
-        # add_asset_widget(tool_object, asset_details)
         add_asset_widget(tool_object, new_asset_object)
 
 
-# def add_asset_widget(tool_object: QMainWindow, asset_details: val.ValkyrieAsset):
-def add_asset_widget(tool_object: QMainWindow, asset_details: dict):
+def add_asset_widget(tool_object: QMainWindow, asset_object: val.ValkyrieAsset):
     """Add Asset as widget to main asset list widget.
 
     The dictionary returned is in the following format:
 
     Args:
         tool_object (QMainWindow): Asset Manager tool object.
-        asset_details (dict): Asset's detailed information.
+        asset_object (dict): Asset's detailed information.
 
     Returns:
         QListWidgetItem: New list widget item for Asset.
@@ -121,7 +106,7 @@ def add_asset_widget(tool_object: QMainWindow, asset_details: dict):
     asset_main_widget = LOADER.load(asset_widget_path, tool_object)
     # Add new item to list widget
     new_asset_item = awi.AssetWidgetItem(
-        tool_object.root.list_asset_previews, asset_details, tool_object
+        tool_object.root.list_asset_previews, asset_object, tool_object
     )
     # Set vertical size of new item
     new_asset_item.setSizeHint(QtCore.QSize(128, 144))
@@ -133,12 +118,12 @@ def add_asset_widget(tool_object: QMainWindow, asset_details: dict):
     )
 
     # Set text and images for new widget
-    asset_pixmap = QtGui.QPixmap(asset_details["asset_preview"])
+    asset_pixmap = QtGui.QPixmap(asset_object.get_asset_preview_path())
     asset_main_widget.lbl_asset_preview.setPixmap(asset_pixmap)
     asset_main_widget.lbl_asset_preview.setScaledContents(True)
 
     # Set asset name
-    asset_main_widget.lbl_asset_name.setText(asset_details["asset_name"])
+    asset_main_widget.lbl_asset_name.setText(asset_object.get_asset_name())
 
     return new_asset_item
 

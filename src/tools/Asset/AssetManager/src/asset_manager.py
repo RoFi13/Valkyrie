@@ -6,14 +6,11 @@ file.
 # Can't find PySide2 modules pylint: disable=I1101
 
 from functools import partial
-import json
 import logging
 import os
 import re
-import shutil
 
-from PySide6 import QtCore, QtGui, QtWidgets
-from PySide6.QtCore import QPoint, Qt
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtUiTools import QUiLoader
 
 from Core import core_paths as cpath
@@ -26,10 +23,6 @@ from Core.util import maya_file_util_tools as mfut
 from Core.util import project_util_tools as prj
 from Core.util import string_util_tools as sut
 
-# from Perforce.DatabaseTasks.src import DbTasks as db
-
-from Unreal.util.src import fbx_export_settings as fbx
-
 from Util.UtilTools.src import util_tools as utt
 
 from .gui import asset_gui_utils as agu
@@ -39,26 +32,6 @@ from .util import validation_utils as vu
 
 # Import maya modules
 from maya import cmds
-from maya import mel
-from maya import utils as util
-
-# from tools.asset.AssetUtils import ghost_shapes_util as gsu
-# from tools.unrealUtilities import unreal_utilities as uu
-# from tools.util.virusCleanup import virus_cleanup as vc
-
-from importlib import reload
-
-reload(prj)
-reload(cpath)
-# reload(db)
-reload(cpath)
-reload(put)
-reload(alu)
-reload(agu)
-reload(vu)
-reload(fut)
-reload(snip)
-reload(utt)
 
 LOADER = QUiLoader()
 
