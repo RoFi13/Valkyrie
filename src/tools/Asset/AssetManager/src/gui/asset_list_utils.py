@@ -138,12 +138,10 @@ def add_file_widget(
     Args:
         selected_asset_item (QtWidgets.QListWidgetItem): Selected Asset Widget item.
         version_details (dict): Version details of either Published or APB versions.
-            {
-                "<version>":{
-                    "maya_file": "../Path/to/published_maya_file.mb"
-                    "version_preview": "../Path/to/published_preview.jpg"
-                }
-            }
+            Each Key is the Version string e.g. 'v###' and its value is a dictionary as
+            follows:
+            {"maya_file": "../Path/to/published_maya_file.mb"
+            "version_preview": "../Path/to/published_preview.jpg"}
         is_published_asset (bool, optional): _description_. Defaults to False.
     """
     file_widget_path = selected_asset_item.tool_object.ui_settings["file_widget"]

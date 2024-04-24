@@ -143,19 +143,15 @@ def confirm_publish_details(asset_details: dict, publish_details: dict):
 
     Args:
         asset_details (dict): Asset details data in following format:
-        {
-            "asset_category" (str): "Name of Asset Category,
+            {"asset_category" (str): "Name of Asset Category,
             "asset_name" (str): Name of Asset,
             "asset_variant" (str): Name of Asset Variant,
-            "file_path" (str): File path if chosen. Otherwise is None
-        },
+            "file_path" (str): File path if chosen. Otherwise is None.}
         publish_details (dict): Publish details data in following format:
-        {
-            "version": Version string i.e. "v001",
+            {"version": Version string i.e. "v001",
             "file_path": Final maya file path name,
             "textures_directory": Publish textures version directory
-                i.e. Publish/v001/Textures
-        }
+            i.e. Publish/v001/Textures}
     """
     confirm_msg = (
         "Publishing Asset with the following information:\n"

@@ -78,12 +78,10 @@ def create_latest_version(
     Loop until version of file doesn't exist.
 
     Args:
-        file_details (dict):            File details.
-                                        {
-                                            "parent_directory_path": (str),
-                                            "string_before_version": (str),
-                                            "string_after_version": (str)
-                                        }
+        file_details (dict): File details in the following format:
+            {"parent_directory_path": (str),
+            "string_before_version": (str),
+            "string_after_version": (str)}
         current_file_path (str):        Current file path to start checking.
         new_version_number (int):       Version to check for.
         version_padding (int):   How much padding for version number.

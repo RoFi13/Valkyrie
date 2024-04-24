@@ -271,25 +271,21 @@ class ValkyrieAsset:
         """
         return self._asset_preview_path
 
+    # TODO: This currently isn't implemented with the Asset Manager yet.
     def set_asset_metadata_path(self, new_metadata_path: str):
         """Set the Asset's current metadata JSON file path.
 
         Args:
             new_metadata_path (str): New metadata path.
-
-        TODO:
-            * This currently isn't implemented with the Asset Manager yet.
         """
         self._asset_metadata_path = new_metadata_path
 
+    # TODO: This currently isn't implemented with the Asset Manager yet.
     def get_asset_metadata_path(self):
         """Get Asset's current metadata path.
 
         Returns:
             str: Path to Asset's metadata JSON file.
-
-        TODO:
-            * This currently isn't implemented with the Asset Manager yet.
         """
         return self._asset_metadata_path
 

@@ -71,13 +71,10 @@ class AssetWidgetItem(QtWidgets.QListWidgetItem):
 
         Returns:
             dict: Dictionary of published maya file paths with versions and version
-                previews in the following format:
-                {
-                    "<version>":{
-                        "maya_file": "../Path/to/published_maya_file.mb"
-                        "version_preview": "../Path/to/published_preview.jpg"
-                    }
-                }
+                previews. Each Key is the Version string e.g. 'v###' and its value
+                is a dictionary as follows:
+                {"maya_file": "../Path/to/published_maya_file.mb"
+                "version_preview": "../Path/to/published_preview.jpg"}
         """
         LOG.debug("Variation Dictionary: %s", self.asset_variations)
         if len(self.asset_variations[variation].get_published_versions()) == 0:
@@ -111,13 +108,10 @@ class AssetWidgetItem(QtWidgets.QListWidgetItem):
 
         Returns:
             dict: Dictionary of apb/wip maya file paths with versions and version
-                previews in the following format:
-                {
-                    "<version>":{
-                        "maya_file": "../Path/to/published_maya_file.mb"
-                        "version_preview": "../Path/to/published_preview.jpg"
-                    }
-                }
+                previews. Each Key is the Version string e.g. 'v###' and its value
+                is a dictionary as follows:
+                {"maya_file": "../Path/to/published_maya_file.mb"
+                "version_preview": "../Path/to/published_preview.jpg"}
         """
         maya_file_details = {}
         for version, version_details in self.asset_variations[variation][

@@ -365,10 +365,10 @@ class AssetManager(QtWidgets.QMainWindow):
 
         Args:
             asset_details (dict): Asset details data as follows:
-                "asset_category" (str): "Name of Asset Category,
+                {"asset_category" (str): "Name of Asset Category,
                 "asset_name" (str): Name of Asset,
                 "asset_variant" (str): Name of Asset Variant,
-                "file_path" (str): File path if chosen. Otherwise is None
+                "file_path" (str): File path if chosen. Otherwise is None}
 
         Returns:
             str: Path to newly created asset's variant root folder.
@@ -404,10 +404,10 @@ class AssetManager(QtWidgets.QMainWindow):
 
         Returns:
             dict: Return the final maya file details in the following format:
-                "version": Version string i.e. "v001",
+                {"version": Version string i.e. "v001",
                 "file_path": Final maya file path name,
                 "textures_directory": APB textures version directory
-                i.e. Maya/Textures/v001
+                i.e. Maya/Textures/v001}
         """
         apb_maya_directory = f"{asset_variant_path}/APB/Maya"
         apb_files = fut.get_files_or_folders(
@@ -467,10 +467,10 @@ class AssetManager(QtWidgets.QMainWindow):
 
         Returns:
             dict: Return the final maya file details in the following format:
-                "version": Version string i.e. "v001",
+                {"version": Version string i.e. "v001",
                 "file_path": Final maya file path name,
                 "textures_directory": Publish textures version directory
-                i.e. Publish/v001/Textures
+                i.e. Publish/v001/Textures}
         """
         asset_structure = "MDL"
         if utt.check_scene_for_joints() is True:
