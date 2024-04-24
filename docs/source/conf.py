@@ -19,7 +19,7 @@ release = "0.0.1"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx.ext.autosummary", "sphinx.ext.autodoc"]
+extensions = ["sphinx.ext.autosummary", "sphinx.ext.autodoc", "sphinx.ext.napoleon"]
 
 autosummary_generate = True
 
@@ -34,3 +34,4 @@ exclude_patterns = []
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
+html_context = {"css_files": ["_static/valkyrie_style.css"]}  # custom CSS styling
