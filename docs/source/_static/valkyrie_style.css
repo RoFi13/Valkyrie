@@ -1,0 +1,8 @@
+@import 'css/theme.css';
+/* Maintain the rtd theme */
+
+/* Forces list-tables to word wrap to column widths. */
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+    white-space: normal
+}
