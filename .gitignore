@@ -127,6 +127,10 @@ placeholder_file.txt
 !VERSION
 !ChangeLog
 
+# Sphinx source files
+!docs/source/*
+!*.rst
+
 # Ignore Unix backup files
 *~
 
