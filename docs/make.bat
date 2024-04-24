@@ -25,10 +25,23 @@ if errorlevel 9009 (
 
 if "%1" == "" goto help
 
-sphinx-apidoc -o source/generated/AssetManager ../src/tools/Asset --force --separate
+if "%1" == "clean" goto build-sphinx-command
 
+if "%2" == "rebuild" goto rebuild-api
+
+:build-sphinx-command
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
 goto end
+
+:rebuild-api
+@REM rebuild specific package API documentation
+echo Regenerating API documentation...
+sphinx-apidoc -o source/generated/Asset ../src/tools/Asset --force --separate --no-headings --no-toc
+sphinx-apidoc -o source/generated/Core ../src/tools/Core --force --separate --no-headings --no-toc
+sphinx-apidoc -o source/generated/Rendering ../src/tools/Rendering --force --separate --no-headings --no-toc
+sphinx-apidoc -o source/generated/Unreal ../src/tools/Unreal --force --separate --no-headings --no-toc
+sphinx-apidoc -o source/generated/Util ../src/tools/Util --force --separate --no-headings --no-toc
+goto build-sphinx-command
 
 :help
 %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
