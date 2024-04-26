@@ -160,12 +160,10 @@ def get_asset_creation_details(tool_object: QMainWindow, is_publish: bool = Fals
 
     Returns:
         dict: Asset details as follows:
-        {
-            "asset_category" (str): Name of Asset Category,
+            {"asset_category" (str): Name of Asset Category,
             "asset_name" (str): Name of Asset,
             "asset_variant" (str): Name of Asset Variant,
-            "file_path" (str): File path if chosen. Otherwise is None
-        }
+            "file_path" (str): File path if chosen. Otherwise is None.}
     """
     asset_details = {
         "asset_category": tool_object.root.cbo_apb_asset_type.currentText(),
