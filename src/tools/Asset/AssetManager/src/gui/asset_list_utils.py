@@ -30,6 +30,7 @@ MODULE_PATH = f"{cpath.get_parent_directory(__file__, 2)}"
 
 # Full path to where resource files are stored
 RSRC_PATH = f"{MODULE_PATH}/resources"
+NO_PREVIEW_IMAGE_PATH = f"{RSRC_PATH}/images/Select_file_preview.png"
 ASSET_WIDGET_UI_PATH = f"{RSRC_PATH}/ui/asset_widget.ui"
 
 LOG = logging.getLogger(os.path.basename(__file__))
@@ -52,13 +53,8 @@ def update_asset_list(
     tool_object.root.list_apb_files.clear()
     tool_object.root.cbo_variations.clear()
     # Update default variation preview image
-    put.set_label_pixmap(
-        tool_object.root.lbl_variation_preview,
-        f"{RSRC_PATH}/images/Select_file_preview.png",
-    )
-    tool_object.current_variation_preview = (
-        f"{RSRC_PATH}/images/Select_file_preview.png"
-    )
+    put.set_label_pixmap(tool_object.root.lbl_variation_preview, NO_PREVIEW_IMAGE_PATH)
+    tool_object.current_variation_preview = NO_PREVIEW_IMAGE_PATH
 
     asset_root_directory = tool_object.asset_root_directory
     asset_category = tool_object.root.cbo_categories.currentText()
@@ -77,9 +73,11 @@ def update_asset_list(
         asset_path = f"{asset_category_path}/{asset}"
 
         new_asset_object = val.ValkyrieAsset(asset, asset_path)
-        new_asset_object.set_asset_preview_path(
-            amu.get_asset_preview(asset_path, asset)
-        )
+        asset_preview_image = amu.get_asset_preview(asset_path, asset)
+        if asset_preview_image is None:
+            asset_preview_image = NO_PREVIEW_IMAGE_PATH
+
+        new_asset_object.set_asset_preview_path(asset_preview_image)
 
         amu.get_asset_variations(new_asset_object)
 
@@ -186,6 +184,9 @@ def update_variation_preview(selected_item: fwi.FileWidgetItem):
     Args:
         selected_item (fwi.FileWidgetItem): File Widget selected.
     """
+    if selected_item is None:
+        return
+
     put.set_label_pixmap(
         selected_item.root_object.lbl_variation_preview, selected_item.version_preview
     )
@@ -201,12 +202,16 @@ def asset_selection_changed(selected_item: awi.AssetWidgetItem):
     amu.update_variation_options(selected_item)
     # Clear preview image
     put.set_label_pixmap(
-        selected_item.root_object.lbl_variation_preview,
-        f"{RSRC_PATH}/images/Select_file_preview.png",
+        selected_item.root_object.lbl_variation_preview, NO_PREVIEW_IMAGE_PATH
     )
+
     # Update variation preview path
-    selected_item.tool_object.current_variation_preview = (
-        f"{RSRC_PATH}/images/Select_file_preview.png"
+    if selected_item.tool_object.root.list_published_files.count() == 0:
+        selected_item.tool_object.current_variation_preview = NO_PREVIEW_IMAGE_PATH
+
+    selected_item.tool_object.root.list_published_files.setCurrentRow(0)
+    publish_selection_changed(
+        selected_item.tool_object.root.list_published_files.item(0)
     )
 
 
@@ -234,6 +239,9 @@ def publish_selection_changed(selected_item: fwi.FileWidgetItem):
     Args:
         selected_item (fwi.FileWidgetItem): File widget selected.
     """
+    if selected_item is None:
+        return
+
     update_variation_preview(selected_item)
     # Update variation preview path
     selected_item.tool_object.current_variation_preview = selected_item.version_preview

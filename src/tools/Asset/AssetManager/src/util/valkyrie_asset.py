@@ -6,11 +6,19 @@ import os
 from pathlib import PurePath
 import re
 
+from Core import core_paths as cpath
 from Core.util import file_util_tools as fut
 from Core.util import project_util_tools as prj
 
 
 LOG = logging.getLogger(os.path.basename(__file__))
+
+# Current Module root path
+MODULE_PATH = f"{cpath.get_parent_directory(__file__, 2)}"
+
+# Full path to where resource files are stored
+RSRC_PATH = f"{MODULE_PATH}/resources"
+NO_PREVIEW_IMAGE_PATH = f"{RSRC_PATH}/images/Select_file_preview.png"
 
 PROJECT_CONFIGS = prj.get_project_configs()
 
@@ -222,6 +230,7 @@ class ValkyrieAsset:
         self.set_asset_metadata_path(
             PurePath(asset_path, f"{asset_name}_metadata.json")
         )
+        self.set_asset_preview_path(NO_PREVIEW_IMAGE_PATH)
 
     def set_asset_name(self, new_name: str):
         """Set Asset's name.
