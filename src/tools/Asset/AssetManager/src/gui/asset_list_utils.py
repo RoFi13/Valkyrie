@@ -73,11 +73,11 @@ def update_asset_list(
         asset_path = f"{asset_category_path}/{asset}"
 
         new_asset_object = val.ValkyrieAsset(asset, asset_path)
-        asset_preview_image = amu.get_asset_preview(asset_path, asset)
-        if asset_preview_image is None:
-            asset_preview_image = NO_PREVIEW_IMAGE_PATH
+        new_asset_preview_path = amu.get_asset_preview(asset_path, asset)
+        if new_asset_preview_path is None:
+            new_asset_preview_path = f"{RSRC_PATH}/images/Select_file_preview.png"
 
-        new_asset_object.set_asset_preview_path(asset_preview_image)
+        new_asset_object.set_asset_preview_path(new_asset_preview_path)
 
         amu.get_asset_variations(new_asset_object)
 
@@ -91,7 +91,7 @@ def add_asset_widget(tool_object: QMainWindow, asset_object: val.ValkyrieAsset):
 
     Args:
         tool_object (QMainWindow): Asset Manager tool object.
-        asset_object (dict): Asset's detailed information.
+        asset_object (val.ValkyrieAsset): Asset's detailed information.
 
     Returns:
         QListWidgetItem: New list widget item for Asset.
