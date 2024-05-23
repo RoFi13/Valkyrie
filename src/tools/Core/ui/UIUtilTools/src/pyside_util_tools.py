@@ -10,13 +10,23 @@ import os
 
 from Core import core_paths as cpath
 
-# from PySide2 import QtCore, QtGui, QtWidgets
-# from PySide2.QtUiTools import QUiLoader
-# from PySide2.QtWidgets import QComboBox, QMainWindow, QProgressDialog
-
-from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtGui
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QComboBox, QMainWindow, QProgressDialog
+from PySide6.QtWidgets import (
+    QBoxLayout,
+    QComboBox,
+    QFrame,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QProgressDialog,
+    QPushButton,
+    QSpacerItem,
+    QTreeWidgetItem,
+    QVBoxLayout,
+    QWidget,
+)
 
 LOADER = QUiLoader()
 
@@ -119,11 +129,11 @@ def update_combobox(
     return True
 
 
-def set_label_pixmap(label: QtWidgets.QLabel, image_path: str):
+def set_label_pixmap(label: QLabel, image_path: str):
     """Set a QLabel object's pixmap image.
 
     Args:
-        label (QtWidgets.qLabel): QLabel object to change image for.
+        label (qLabel): QLabel object to change image for.
         image_path (str): Image file path.
     """
 
@@ -133,10 +143,7 @@ def set_label_pixmap(label: QtWidgets.QLabel, image_path: str):
 
 
 def create_progress_bar(
-    title: str,
-    initial_label: str,
-    number_of_operations: int,
-    parent_ui_object: QtWidgets.QWidget,
+    title: str, initial_label: str, number_of_operations: int, parent_ui_object: QWidget
 ):
     """Create a progress bar.
 
@@ -144,7 +151,7 @@ def create_progress_bar(
         title (str): Title of progress bar window.
         initial_label (str): Initial starting progress bar label.
         number_of_operations (int): Number of operations to reach 100%.
-        parent_ui_object (QtWidgets.QWidget): parent widget of this progress bar.
+        parent_ui_object (QWidget): parent widget of this progress bar.
 
     Returns:
         QWidget of newly create progress bar.
@@ -162,11 +169,11 @@ def create_progress_bar(
     return progress_bar
 
 
-def update_progress_bar(progress_bar: QtWidgets.QProgressDialog, new_label: str = None):
+def update_progress_bar(progress_bar: QProgressDialog, new_label: str = None):
     """Update Progress bar.
 
     Args:
-        progress_bar (QtWidgets.QProgressDialo): Object of progress bar.
+        progress_bar (QProgressDialo): Object of progress bar.
         new_label (str): New value for the progress bar.
     """
 
@@ -176,6 +183,106 @@ def update_progress_bar(progress_bar: QtWidgets.QProgressDialog, new_label: str 
         progress_bar.setLabelText(new_label)
 
     QtCore.QCoreApplication.processEvents()
+
+
+def create_new_button(
+    text: str = "",
+    icon_path: str = "",
+    icon_size: QtCore.QSize = None,
+    minimum_size: QtCore.QSize = None,
+    maximum_size: QtCore.QSize = None,
+):
+    """Create new Pyside Button.
+
+    Args:
+        text (str, optional): Button text. Defaults to "".
+        icon_path (str, optional): Button icon path. Defaults to "".
+        icon_size (QtCore.QSize, optional): Icon size. Defaults to None.
+        minimum_size (QtCore.QSize, optional): Minimum x and y size. Defaults to None.
+        maximum_size (QtCore.QSize, optional): Maximum x and y size. Defaults to None.
+
+    Returns:
+        QPushButton: Returns newly created Button widget.
+    """
+
+    new_button = QPushButton(text)
+
+    if minimum_size is not None:
+        new_button.setMinimumSize(minimum_size)
+
+    if maximum_size is not None:
+        new_button.setMaximumSize(maximum_size)
+
+    if len(icon_path) > 0:
+        new_button.setIcon(QtGui.QIcon(QtGui.QPixmap(icon_path)))
+
+    if icon_size is not None:
+        new_button.setIconSize(icon_size)
+
+    return new_button
+
+
+def clear_grid_layout(grid_layout: QGridLayout):
+    """Clear all widgets from a grid layout.
+
+    Args:
+        grid_layout (QGridLayout): Grid to clear of widgets.
+    """
+    # Loop backwards to avoid indexing issues while removing items
+    for i in reversed(range(grid_layout.count())):
+        item = grid_layout.itemAt(i)
+        widget = item.widget()
+        if widget:
+            grid_layout.removeWidget(widget)
+            widget.deleteLater()  # Safely delete the widget
+
+
+def clear_box_layout(box_layout: QBoxLayout):
+    """Clear the Box Layout of all items and widgets.
+
+    Args:
+        box_layout (QBoxLayout): Box layout to clear of items and widgets.
+    """
+    # Iterate backwards to avoid indexing issues after removal
+    for i in range(box_layout.count() - 1, -1, -1):
+        item = box_layout.takeAt(i)
+        if item.widget():
+            # If the item is a widget, remove and delete it
+            widget = item.widget()
+            widget.deleteLater()
+        elif item.layout():
+            # If the item is a layout, recursively clear the layout and then delete it
+            clear_box_layout(item.layout())
+            item.layout().deleteLater()
+        elif item.spacerItem():
+            # For spacer items, the takeAt() already removes the spacer item
+            pass
+
+
+def create_line(create_horizontal: bool = True) -> QFrame:
+    new_line = QFrame()
+    if create_horizontal:
+        new_line.setFrameShape(QFrame.HLine)
+    else:
+        new_line.setFrameShape(QFrame.VLine)
+
+    new_line.setFrameShadow(QFrame.Sunken)
+    return new_line
+
+
+# TODO: This is dangerous. Don't use when creating new items. Use for existing items?
+def reparent_tree_widget_item(
+    item: QTreeWidgetItem, new_parent_item: QTreeWidgetItem
+) -> None:
+    old_parent = item.parent()
+    if old_parent is None:
+        item_index = item.treeWidget().indexOfTopLevelItem(item)
+        item_without_parent = item.treeWidget().takeTopLevelItem(item_index)
+    else:
+        item_index = old_parent.indexOfChild(item)
+        item_without_parent = old_parent.takeChild(item_index)
+
+    new_parent_item.addChild(item_without_parent)
 
 
 if __name__ == "__main__":
