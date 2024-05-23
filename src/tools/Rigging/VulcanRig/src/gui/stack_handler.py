@@ -51,6 +51,8 @@ def handle_module_click(
 
     # Get Parent module in order to add the newly created module as a child
     # TODO: need to rethink how to set/get parent and child modules in metadata
+    # TODO: maybe need to check for root module existing here instead of in the gui
+    # create_stack_module() function. Check obsidian for more details...
     parent_module: module_product_factories.ModuleProductFactory
     if vulcan_window.root.tree_module_stack.currentItem() is None:
         parent_module = msu.find_all_modules_of_type(

@@ -500,3 +500,23 @@ class BindCorrectivePositions(Enum):
         "parent": EpicBasicSkeleton.SPINE_05.value,
         "position": [-12.816333877211873, 130.64292582497197, -1.270466524037893],
     }
+    THIGH_TWIST_01_R = {
+        "name": "thigh_twist_01_r",
+        "parent": "thigh_r",
+        "position": [-11.790621259074346, 80.23777282160837, 2.332674289235978],
+    }
+    THIGH_TWISTCOR_01_R = {
+        "name": "thigh_twistCor_01_r",
+        "parent": "thigh_twist_01_r",
+        "position": [-11.790621259074348, 80.23777282160836, 2.3326742892359746],
+    }
+    THIGH_TWIST_02_R = {
+        "name": "thigh_twist_02_r",
+        "parent": "thigh_r",
+        "position": [-12.42664237471609, 65.00370763522257, 2.0149377841332257],
+    }
+    THIGH_TWISTCOR_02_R = {
+        "name": "thigh_twistCor_02_r",
+        "parent": "thigh_twist_02_r",
+        "position": [-12.426642374716087, 65.00370763522263, 2.014937784133224],
+    }
