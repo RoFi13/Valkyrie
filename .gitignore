@@ -356,3 +356,9 @@ coverage.xml
 
 # Include UI files
 !*.ui
+
+# Include icon files
+!*.png
+!*.psd
+!*.jpg
+!*.gif
