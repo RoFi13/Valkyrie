@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>870</width>
+    <height>557</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="root_widget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="grpBox_modules">
+          <property name="minimumSize">
+           <size>
+            <width>232</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="title">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QVBoxLayout" name="vb_modules">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QComboBox" name="comboBox">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Biped</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Quadruped</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Vehicle</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Root</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QPushButton" name="btn_root_module">
+                 <property name="minimumSize">
+                  <size>
+                   <width>64</width>
+                   <height>64</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>64</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_ue_skeleton">
+                 <property name="minimumSize">
+                  <size>
+                   <width>64</width>
+                   <height>64</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>64</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>UE
+Skeleton</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_finalize_bpx">
+                 <property name="minimumSize">
+                  <size>
+                   <width>64</width>
+                   <height>64</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>64</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Finalize
+Skeleton</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Members</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QGridLayout" name="grid_module_members" rowminimumheight="0" columnminimumwidth="0">
+               <property name="leftMargin">
+                <number>5</number>
+               </property>
+               <property name="topMargin">
+                <number>5</number>
+               </property>
+               <property name="rightMargin">
+                <number>5</number>
+               </property>
+               <property name="bottomMargin">
+                <number>5</number>
+               </property>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="grpBox_module_stack">
+          <property name="title">
+           <string>Module Stack</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <layout class="QVBoxLayout" name="vb_module_stack">
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QTreeWidget" name="tree_module_stack">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>300</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOn</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
+               </property>
+               <property name="autoScrollMargin">
+                <number>25</number>
+               </property>
+               <property name="dragEnabled">
+                <bool>false</bool>
+               </property>
+               <property name="dragDropMode">
+                <enum>QAbstractItemView::InternalMove</enum>
+               </property>
+               <property name="defaultDropAction">
+                <enum>Qt::MoveAction</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectItems</enum>
+               </property>
+               <property name="indentation">
+                <number>15</number>
+               </property>
+               <property name="uniformRowHeights">
+                <bool>true</bool>
+               </property>
+               <property name="itemsExpandable">
+                <bool>true</bool>
+               </property>
+               <property name="animated">
+                <bool>true</bool>
+               </property>
+               <attribute name="headerVisible">
+                <bool>false</bool>
+               </attribute>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="grpBox_details_panel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>256</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Details</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <layout class="QVBoxLayout" name="vb_details"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>870</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

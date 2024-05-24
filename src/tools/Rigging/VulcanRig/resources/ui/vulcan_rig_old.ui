@@ -1,0 +1,1368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>459</width>
+    <height>486</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>200</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>500</width>
+    <height>137</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="animated">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="root_widget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>0</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>6</number>
+    </property>
+    <property name="leftMargin">
+     <number>9</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>9</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QToolBox" name="modulesMD_toolBox">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="tabSpacing">
+           <number>6</number>
+          </property>
+          <widget class="QWidget" name="spineMD_page">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>437</width>
+             <height>272</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <attribute name="label">
+            <string>Spine Module</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lbl_spineStartJoint">
+                <property name="text">
+                 <string>Start Joint</string>
+                </property>
+                <property name="margin">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_spineStartJoint">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_grabSpineStartJoint">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Grab</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lbl_spineEndJoint">
+                <property name="text">
+                 <string>End Joint</string>
+                </property>
+                <property name="margin">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_spineEndJoint">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_grabSpineEndJoint">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Grab</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QPushButton" name="btn_createSpineModule">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Create Spine Module</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_spineClearFields">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Clear Fields</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="neckHeadMD_page">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>437</width>
+             <height>272</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <attribute name="label">
+            <string>Neck/Head Module</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lbl_neckStartJoint">
+                <property name="text">
+                 <string>Start Joint</string>
+                </property>
+                <property name="margin">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_neckStartJoint">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_grabNeckStartJoint">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Grab</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lbl_neckEndJoint">
+                <property name="text">
+                 <string>End Joint</string>
+                </property>
+                <property name="margin">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_neckEndJoint">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_grabNeckEndJoint">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Grab</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QPushButton" name="btn_createNeckHeadModule">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Create Neck/Head Module</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_neckClearFields">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Clear Fields</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="armMD_page">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>437</width>
+             <height>272</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <attribute name="label">
+            <string>Arm Module</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>35</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_14">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lbl_clavicle">
+                  <property name="text">
+                   <string>Clavicle Joint</string>
+                  </property>
+                  <property name="margin">
+                   <number>2</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="line_clavicle">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_grabClavicle">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Grab</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lbl_shoulder">
+                  <property name="text">
+                   <string>Shoulder Joint</string>
+                  </property>
+                  <property name="margin">
+                   <number>2</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="line_shoulder">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_grabShoulder">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Grab</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lbl_wrist">
+                  <property name="text">
+                   <string>Wrist Joint</string>
+                  </property>
+                  <property name="margin">
+                   <number>2</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="line_wrist">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_grabWrist">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Grab</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_14">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="btn_createArmMD">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Create Arm Module</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_armClearFields">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Clear Fields</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_33">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="btn_createHandModule">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Create Hand Module</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="legMD_page">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>437</width>
+             <height>272</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Leg Module</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QTabWidget" name="leg_tabs">
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="bipedLeg_tab">
+               <attribute name="title">
+                <string>Biped Leg</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_11">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_10">
+                  <property name="spacing">
+                   <number>6</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QPushButton" name="btn_placeFootPivots">
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                    <property name="text">
+                     <string>Place Foot Pivots</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_7">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_bipedLegStartJnt">
+                      <property name="text">
+                       <string>Leg Start Joint</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_bipedLegStartJnt">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabBipedLegStartJnt">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_15">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_bipedLegEndJnt">
+                      <property name="text">
+                       <string>Leg End Joint</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_bipedLegEndJnt">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabBipedLegEndJnt">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_16">
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="btn_createBipedLegModule">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Create Leg Module</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_bipedLegClearFields">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Clear Fields</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="quadrupedLeg_tab">
+               <attribute name="title">
+                <string>Quadruped Leg</string>
+               </attribute>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="spaceSwitchMD_page">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>437</width>
+             <height>272</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <attribute name="label">
+            <string>Space Switches</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lbl_localSpaceJnt">
+                <property name="text">
+                 <string>Local Space Joint</string>
+                </property>
+                <property name="margin">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_localSpaceJnt">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_grabLocalSpaceJnt">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Grab</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lbl_spaceSwitchCtrl">
+                <property name="text">
+                 <string>Controller</string>
+                </property>
+                <property name="margin">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_spaceSwitchCtrl">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_grabSpaceSwitchCtrl">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Grab</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lbl_spaceSwitcherCtrl">
+                <property name="text">
+                 <string>Switcher Control</string>
+                </property>
+                <property name="margin">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_spaceSwitcherCtrl">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_grabSpaceSwitcherCtrl">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Grab</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lbl_spaceSwitchModuleType">
+                <property name="text">
+                 <string>Module</string>
+                </property>
+                <property name="margin">
+                 <number>2</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="line_spaceSwitchModuleType">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_grabSpaceSwitchModuleType">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Grab</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QPushButton" name="btn_createSpaceSwitch">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Create Space Switch</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_spaceSwitchClearFields">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Clear Fields</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_attachSpaceSwitch">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Attach to Space Switch</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="stabilizers_tab">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>416</width>
+             <height>291</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Stabilizers</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_19">
+            <item>
+             <widget class="QTabWidget" name="stabilizerUtilities_tab">
+              <property name="tabPosition">
+               <enum>QTabWidget::North</enum>
+              </property>
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="tab_2">
+               <attribute name="title">
+                <string>Twist Setup</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_17">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_16">
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_20">
+                    <item>
+                     <widget class="QSpinBox" name="spin_insertJoints">
+                      <property name="value">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_insertJoints">
+                      <property name="text">
+                       <string>Insert Joints</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_insertTwistJoints">
+                      <property name="text">
+                       <string>Insert Twist Joints</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_26">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_twistElbowJoint">
+                      <property name="text">
+                       <string>Elbow Bind Joint</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_twistElbowJoint">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabTwistElbowJoint">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_27">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_twistWristJoint">
+                      <property name="text">
+                       <string>Wrist Bind Joint</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_twistWristJoint">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabTwistWristJoint">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_32">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_twistPointerJoint">
+                      <property name="text">
+                       <string>Pointer Joint</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_twistPointerJoint">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabTwistPointerJoint">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_30">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_twistSetupJoints">
+                      <property name="text">
+                       <string>Twist Joints</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_twistSetupJoints">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabTwistSetupJoints">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Multi-Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_31">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="btn_createTwistSetup">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Create Twist Setup</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_twistClearFields">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Clear Fields</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="tab">
+               <attribute name="title">
+                <string>Stabilizer Setup</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_15">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_13">
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_25">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_stabClavJoint">
+                      <property name="text">
+                       <string>Clavicle Bind Joint</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_stabClavJoint">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabStabClavJoint">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(56, 56, 56);</string>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_23">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_stabShoulderJoint">
+                      <property name="text">
+                       <string>Shoulder Bind Joint</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_stabShoulderJoint">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabStabShoulderJoint">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(56, 56, 56);</string>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_21">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_ikElbowJoint">
+                      <property name="text">
+                       <string>IK Elbow/Knee Joint</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_ikElbowJoint">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabIkElbowJoint">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(56, 56, 56);</string>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_22">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_stabilizeCurve">
+                      <property name="text">
+                       <string>Stabilize Curve</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_stabilizeCurve">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabStabilizerCurve">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(56, 56, 56);</string>
+                      </property>
+                      <property name="text">
+                       <string>Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_24">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lbl_multiTwistJoints">
+                      <property name="text">
+                       <string>Twist Joints</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_multiTwistJoints">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_grabMultiTwistJoints">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(56, 56, 56);</string>
+                      </property>
+                      <property name="text">
+                       <string>Multi-Grab</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_19">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="btn_createStabilizeCurve">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(56, 56, 56);</string>
+                      </property>
+                      <property name="text">
+                       <string>Create Shoulder Stabilize Curve</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_stabilizeShoulder">
+                      <property name="styleSheet">
+                       <string notr="true">border-color: rgb(255, 255, 255);
+background-color: rgb(56, 56, 56);</string>
+                      </property>
+                      <property name="text">
+                       <string>Stabilize Shoulder</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="utilitiesMD_page">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>437</width>
+             <height>272</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <attribute name="label">
+            <string>Utilities</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <item>
+               <widget class="QPushButton" name="btn_selectNonEndJnts">
+                <property name="text">
+                 <string>Select All Non-End Joints</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_mirrorCtrls">
+                <property name="text">
+                 <string>Mirror Control Shapes</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_attachModules">
+                <property name="text">
+                 <string>Attach Modules to Spine</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_28">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lbl_rigName">
+                  <property name="text">
+                   <string>Rig Name</string>
+                  </property>
+                  <property name="margin">
+                   <number>2</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="line_rigName">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_finalizeRig">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Finalize Rig</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
