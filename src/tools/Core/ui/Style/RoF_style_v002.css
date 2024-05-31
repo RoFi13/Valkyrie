@@ -99,6 +99,16 @@ QLineEdit {
     /* Slightly lighter gray for edit backgrounds */
 }
 
+QLineEdit:disabled {
+    border: 1px solid #2A2A2A;
+    /* Darker Gray border for disabled line edits */
+    padding: 2px;
+    background-color: #2A2A2A;
+    /* Darker background color for disabled line edits */
+    color: #7A7A7A;
+    /* Gray text color for disabled line edits */
+}
+
 QMenuBar {
     background-color: #272626;
     /* Dark Gray for menu bar */
