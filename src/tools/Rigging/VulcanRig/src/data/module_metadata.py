@@ -1,4 +1,4 @@
-# Copyright (C) 2023 Robert Wiese - All Rights Reserved.
+# Copyright (C) 2024 Robert Wiese - All Rights Reserved.
 """Vulcan Metadata controller class."""
 
 # from __future__ import annotations
@@ -12,9 +12,7 @@ from maya import cmds
 
 from Core import core_paths as cpath
 
-# from . import gui_factories
-# from ..rig_modules import module_factory
-# from ..data.module_types import ModuleType
+from .module_types import ModuleType
 
 from importlib import reload
 
@@ -34,6 +32,7 @@ class MetadataAttributes(Enum):
 class RootOrganizeNodes(Enum):
     """Root Organization Maya node names."""
 
+    DEFAULT_TOP_NODE = "Asset"
     JOINTS_GRP = "JOINTS_GRP"
     CONTROLS_GRP = "CONTROLS_GRP"
     GUTS_GRP = "GUTS_GRP"
@@ -45,6 +44,7 @@ class ModuleConfig:
     metanode: str = ""
     parent_metanode: str = ""
     child_metanodes: List[str] = field(default_factory=list)
+    module_type: str = ""
 
 
 @dataclass
@@ -61,28 +61,9 @@ class BipedSpineConfig(ModuleConfig):
     module_name: str = ""
 
 
-# TODO: Deprecated probably. Just update the attribute in the module itself.
-def update_config_field(data_instance: ModuleConfig, field_name: str, new_value: Any):
-    # Retrieve the field object from the dataclass
-    field_info = {f.name: f for f in fields(data_instance)}
-    if field_name not in field_info:
-        raise ValueError(f"Field '{field_name}' does not exist in the dataclass.")
-
-    # Get the expected type from the field's type annotation
-    expected_type = field_info[field_name].type
-
-    # Check if the new value is of the expected type
-    if not isinstance(new_value, expected_type):
-        raise TypeError(
-            f"Type mismatch: '{field_name}' expects {expected_type}, but got "
-            f"{type(new_value).__name__}"
-        )
-    setattr(data_instance, field_name, new_value)
-
-    return data_instance
-
-
-def convert_dict_to_dataclass(metadata: dict, subclass_type: ModuleConfig):
+def convert_dict_to_dataclass(
+    metadata: dict, subclass_type: ModuleConfig
+) -> ModuleConfig:
     """Try to convert dictionary data to specific Vulcan dataclass type.
 
     Args:

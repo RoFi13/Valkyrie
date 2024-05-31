@@ -11,26 +11,27 @@ import sys
 import os
 import platform
 import json
-from typing import Dict, List
+from typing import Dict, List, TypedDict
 
 # Imported modules should be put at the head of every tool
 from maya import cmds
 from maya import OpenMaya
 from maya import OpenMayaMPx
 
+# Import PySide modules
+from PySide6.QtGui import QAction, QIcon, QPixmap
+from PySide6.QtCore import QPoint, QSize, Qt
+from PySide6.QtWidgets import QMainWindow, QMenu, QTreeWidgetItem
+from PySide6.QtUiTools import QUiLoader
+
 # Imported Custom Modules
 from Core import core_paths as cpath
 from Core import maya_start as ms
 from Core.ui.UIUtilTools.src import pyside_util_tools as put
 
-# Import PySide modules
-from PySide6 import QtCore, QtGui
-from PySide6.QtWidgets import QMainWindow, QTreeWidgetItem
-from PySide6.QtUiTools import QUiLoader
-
-
 # Rigging Modules
 from .rig_modules import bind_proxy_module
+from .rig_modules import root_module
 
 # from .arm_module import arm_module as amd
 # from .spine_module import spine_module as smd
@@ -47,10 +48,10 @@ from .data import module_metadata
 
 # from .data import metadata_controller
 
-from .gui import gui_factories
+from .gui import gui_factories, module_stack_tree, stack_handler
 from .gui import module_stack_util as msu
 from .rig_modules import module_product_factories
-from .util import meta_utils
+from .util import metadata_utils
 from .util import vulcan_utils as vutil
 
 from .rig_modules import module_factory
@@ -66,7 +67,10 @@ from importlib import reload
 # reload(space)
 # reload(vutil)
 reload(msu)
-reload(meta_utils)
+reload(module_stack_tree)
+reload(root_module)
+reload(metadata_utils)
+reload(stack_handler)
 # reload(metadata_controller)
 reload(module_product_factories)
 reload(gui_factories)
@@ -99,6 +103,11 @@ CTLLIB = os.path.join(RSRC_PATH, "custom_controls")
 LOG = logging.getLogger(os.path.basename(__file__))
 
 
+class StackModuleData(TypedDict):
+    parent_item: QTreeWidgetItem = None
+    child_items: List[QTreeWidgetItem] = []
+
+
 class VulcanRig(QMainWindow):
     """Modular Rigging Tool."""
 
@@ -121,6 +130,9 @@ class VulcanRig(QMainWindow):
         self.current_modules: Dict[
             QTreeWidgetItem, module_product_factories.ModuleProductFactory
         ] = {}
+        # self.current_modules: Dict[
+        #     QTreeWidgetItem, Dict[str, module_product_factories.ModuleProductFactory]
+        # ] = {}
 
         # Final UI setup
         # Set up default UI settings
@@ -140,17 +152,13 @@ class VulcanRig(QMainWindow):
 
         # Gui stack factory
         self.gui_stack_factory = gui_factories.GuiStackFactory(
-            self.root.tree_module_stack, self.root.vb_details
+            self.tree_stack, self.root.vb_details
         )
-
         # Create Module Factory
         self.module_factory = module_factory.ModuleFactory(self)
 
-        # Class object interface for handling module metadata and UI updates
-        # self.meta_controller = metadata_controller.MetadataController()
-
         # Detect existing rig in scene and update GUI if modules are found
-        msu.initialize_scene(self, self.gui_stack_factory)
+        stack_handler.initialize_scene(self, self.gui_stack_factory)
 
     def setup_ui(self):
         """Set up default UI elements."""
@@ -159,34 +167,83 @@ class VulcanRig(QMainWindow):
         msu.add_biped_creation_modules(self)
 
         # Add Custom Tree Widget
-        # self.tree_stack = tsm.TreeStack(self)
-        # self.root.vb_module_stack.addWidget(self.tree_stack)
+        self.tree_stack = module_stack_tree.StackModuleTree(self)
+        self.root.vb_module_stack.addWidget(self.tree_stack)
 
         # Setup module icons
         self.setup_ui_icons()
+
+        self.setup_tree_context_menu()
 
     def setup_ui_icons(self):
         """Setup default UI icons."""
         # Core module icon
         self.root.btn_root_module.setIcon(
-            QtGui.QIcon(QtGui.QPixmap(f"{RSRC_PATH}/icons/root_icons/root_icon.png"))
+            QIcon(QPixmap(f"{RSRC_PATH}/icons/root_icons/root_icon.png"))
         )
-        self.root.btn_root_module.setIconSize(QtCore.QSize(64, 64))
+        self.root.btn_root_module.setIconSize(QSize(64, 64))
+
+    def setup_tree_context_menu(self):
+        self.tree_stack.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.tree_stack.customContextMenuRequested.connect(self.show_tree_context_menu)
+
+    def show_tree_context_menu(self, position: QPoint):
+        clicked_module = self.current_modules[self.tree_stack.itemAt(position)]
+        # TODO: uncomment this out when ready to remove right click on root stack item
+        # if isinstance(clicked_module, root_module.RootModule):
+        #     LOG.debug("Clicked item is Root. Cannot rename.")
+        #     return
+
+        tree_context_menu = QMenu()
+        rename_module_action = QAction("Rename Module", self.tree_stack)
+        delete_module_action = QAction("Delete Module", self.tree_stack)
+        debug_unlock_node_action = QAction("DEV - Unlock Node", self.tree_stack)
+        debug_module_metadata_action = QAction(
+            "DEV - Show Module Metadata", self.tree_stack
+        )
+
+        rename_module_action.triggered.connect(clicked_module.rename_module)
+        delete_module_action.triggered.connect(clicked_module.delete_module)
+        debug_unlock_node_action.triggered.connect(
+            lambda: self.trigger_dev_unlock_metanode(position)
+        )
+        debug_module_metadata_action.triggered.connect(
+            lambda: self.trigger_dev_module_metadata(position)
+        )
+
+        tree_context_menu.addAction(rename_module_action)
+        tree_context_menu.addAction(delete_module_action)
+        tree_context_menu.addAction(debug_unlock_node_action)
+        tree_context_menu.addAction(debug_module_metadata_action)
+
+        tree_context_menu.exec(self.tree_stack.viewport().mapToGlobal(position))
+
+    def trigger_dev_unlock_metanode(self, position: QPoint):
+        clicked_module = self.current_modules[self.tree_stack.itemAt(position)]
+        cmds.lockNode(clicked_module.get_metadata().metanode, lock=False)
+
+    def trigger_dev_module_metadata(self, position: QPoint):
+        clicked_module = self.current_modules[self.tree_stack.itemAt(position)]
+        LOG.debug("********************MODULE DATA***********************")
+        for key, value in clicked_module.__dict__.items():
+            try:
+                LOG.debug("%s: %s", key, value)
+            except RuntimeError:
+                pass
+        LOG.debug("******************************************************")
 
     def setup_signals(self):
         """Connect signals to methods."""
         # Core module
         if ModuleType.ROOT not in self.commands:
-            root_command = msu.AddModuleCommand(
-                self.root.tree_module_stack, ModuleType.ROOT, self
-            )
+            root_command = msu.AddModuleCommand(ModuleType.ROOT, self)
             self.commands[ModuleType.ROOT] = root_command
 
         self.root.btn_root_module.clicked.connect(
             self.commands[ModuleType.ROOT].add_module_to_stack
         )
 
-        self.root.tree_module_stack.itemClicked.connect(self.get_gui_module_details)
+        self.tree_stack.itemClicked.connect(self.get_gui_module_details)
 
         self.root.btn_ue_skeleton.clicked.connect(
             bind_proxy_module.create_unreal_bind_skeleton
@@ -194,12 +251,37 @@ class VulcanRig(QMainWindow):
         self.root.btn_finalize_bpx.clicked.connect(
             bind_proxy_module.finalize_bind_skeleton
         )
+        self.root.btn_dev_open_base_file.clicked.connect(
+            lambda: self.dev_open_file(True)
+        )
+        self.root.btn_dev_open_wip_file.clicked.connect(
+            lambda: self.dev_open_file(False)
+        )
 
     def get_gui_module_details(self, item_clicked: QTreeWidgetItem):
-        # LOG.warning("CURRENT MODULES: %s", self.current_modules)
-        # LOG.warning("CLICKED ITEM: %s", self.current_modules[item_clicked])
         self.current_modules[item_clicked].build_details_panel()
         return
+
+    def dev_open_file(self, open_base_file=True):
+        file_to_open = (
+            "F:/Project_Workspaces/CT-dev/DCC/CG/assets/characters/"
+            "TestSkeleton/Base/APB/Maya/APB_chr_TestSkeleton_Base_v001.mb"
+        )
+
+        if not open_base_file:
+            file_to_open = (
+                "F:/Project_Workspaces/CT-dev/DCC/CG/assets/characters/"
+                "TestSkeleton/Base/APB/Maya/APB_chr_TestSkeleton_Base_v002.mb"
+            )
+
+        cmds.file(
+            file_to_open,
+            force=True,
+            options="v=0;",
+            ignoreVersion=True,
+            type="mayaBinary",
+            open=True,
+        )
 
 
 # class VulcanRigOld(QtWidgets.QMainWindow):

@@ -1,10 +1,12 @@
-# Copyright (C) 2023 Robert Wiese - All Rights Reserved.
+# Copyright (C) 2024 Robert Wiese - All Rights Reserved.
 """Stack Module UI utility functions."""
 # Can't find PySide2 modules pylint: disable=I1101
 
+from __future__ import annotations
 import ast
 import logging
 import os
+from typing import TYPE_CHECKING
 
 from maya import cmds
 
@@ -18,14 +20,19 @@ from Core.ui.UIUtilTools.src import pyside_util_tools as put
 from . import gui_rig_modules, stack_handler
 from . import gui_factories
 from ..data.module_types import ModuleType
-from ..data import module_metadata
+from ..data import module_metadata, build_options
 from ..util import vulcan_utils as vutil
+
+if TYPE_CHECKING:
+    from ..vulcan_rig import VulcanRig
 
 from importlib import reload
 
 reload(put)
 reload(stack_handler)
+reload(module_metadata)
 reload(gui_factories)
+reload(build_options)
 reload(vutil)
 
 # Current Module root path
@@ -40,13 +47,7 @@ LOG = logging.getLogger(os.path.basename(__file__))
 class ModuleCommand:
     """Command interface"""
 
-    def __init__(
-        self,
-        module_stack: QTreeWidget,
-        module_type: ModuleType,
-        vulcan_window: QMainWindow,
-    ):
-        self._module_stack = module_stack
+    def __init__(self, module_type: ModuleType, vulcan_window: VulcanRig):
         self._module_type = module_type
         self._vulcan_window = vulcan_window
 
@@ -60,13 +61,8 @@ class AddModuleCommand(ModuleCommand):
 
     def add_module_to_stack(self):
         # Logic to add the module to the module_stack
-        LOG.info("Adding %s to module_stack", self._module_type)
-
-        # TODO: May not need this handle function. Could just create the factory here
-        # and then create the module
-        stack_handler.handle_module_click(
-            self._module_stack, self._module_type, self._vulcan_window
-        )
+        LOG.info("Adding %s to Stack...", self._module_type)
+        stack_handler.generate_module(self._module_type, self._vulcan_window)
 
 
 def find_all_modules_of_type(
@@ -143,54 +139,6 @@ def get_module_icon_path(module_type: ModuleType):
     return module_icons[module_type]
 
 
-def initialize_scene(
-    vulcan_window: QMainWindow, stack_factory: gui_factories.StackFactory
-) -> None:
-    all_transforms = cmds.ls(type="transform")
-    metadata_attribute = module_metadata.MetadataAttributes.MODULE_META_ATTRIBUTE.value
-
-    # Find the root module first
-    root_module_data: module_metadata.RootConfig = None
-    for node in all_transforms:
-        if cmds.attributeQuery(metadata_attribute, node=node, exists=True):
-            node_metadata = ast.literal_eval(
-                cmds.getAttr(f"{node}.{metadata_attribute}")
-            )
-            root_module_data = module_metadata.convert_dict_to_dataclass(
-                node_metadata, module_metadata.RootConfig
-            )
-            break
-
-    if root_module_data is None:
-        LOG.info("No Root Module metadata found in scene.")
-        return
-
-    # Found the root module, recreating the GUI elements in the stack
-    root_item = stack_factory.create_stack_module(ModuleType.ROOT)
-
-    # Create module product class object without creating new Maya objects
-    root_module = vulcan_window.module_factory.create_module(
-        ModuleType.ROOT, build_maya_module=False
-    )
-    root_module.set_module_metadata(root_module_data)
-    vulcan_window.current_modules[root_item] = root_module
-
-    if len(root_module_data.child_metanodes) == 0:
-        LOG.info("No children metanodes found!")
-        return
-
-    LOG.warning("root module metadata: %s", root_module_data)
-    LOG.warning("root module metadata type: %s", type(root_module_data))
-
-    build_stack_tree(root_module_data)
-
-
-def build_stack_tree(root_module_data: module_metadata.RootConfig):
-    # TODO: come back to this when you have a 2nd module as a child of the root module
-    LOG.info("Building Stack from scene component modules...")
-    return
-
-
 def add_biped_creation_modules(vulcan_window: QMainWindow):
     """Add Biped module buttons to UI.
 
@@ -209,7 +157,7 @@ def add_biped_creation_modules(vulcan_window: QMainWindow):
     )
     if not ModuleType.BIPED_SPINE in vulcan_window.commands:
         vulcan_window.commands[ModuleType.BIPED_SPINE] = AddModuleCommand(
-            vulcan_window.root.tree_module_stack, ModuleType.BIPED_SPINE, vulcan_window
+            ModuleType.BIPED_SPINE, vulcan_window
         )
 
     # Head Module
@@ -221,7 +169,7 @@ def add_biped_creation_modules(vulcan_window: QMainWindow):
     )
     if not ModuleType.BIPED_HEAD in vulcan_window.commands:
         vulcan_window.commands[ModuleType.BIPED_HEAD] = AddModuleCommand(
-            vulcan_window.root.tree_module_stack, ModuleType.BIPED_HEAD, vulcan_window
+            ModuleType.BIPED_HEAD, vulcan_window
         )
 
     # Shoulder Module
@@ -233,9 +181,7 @@ def add_biped_creation_modules(vulcan_window: QMainWindow):
     )
     if not ModuleType.BIPED_SHOULDER in vulcan_window.commands:
         vulcan_window.commands[ModuleType.BIPED_SHOULDER] = AddModuleCommand(
-            vulcan_window.root.tree_module_stack,
-            ModuleType.BIPED_SHOULDER,
-            vulcan_window,
+            ModuleType.BIPED_SHOULDER, vulcan_window
         )
 
     # Arm Module
@@ -247,7 +193,7 @@ def add_biped_creation_modules(vulcan_window: QMainWindow):
     )
     if not ModuleType.BIPED_ARM in vulcan_window.commands:
         vulcan_window.commands[ModuleType.BIPED_ARM] = AddModuleCommand(
-            vulcan_window.root.tree_module_stack, ModuleType.BIPED_ARM, vulcan_window
+            ModuleType.BIPED_ARM, vulcan_window
         )
 
     # Hand Module
@@ -259,7 +205,7 @@ def add_biped_creation_modules(vulcan_window: QMainWindow):
     )
     if not ModuleType.BIPED_HAND in vulcan_window.commands:
         vulcan_window.commands[ModuleType.BIPED_HAND] = AddModuleCommand(
-            vulcan_window.root.tree_module_stack, ModuleType.BIPED_HAND, vulcan_window
+            ModuleType.BIPED_HAND, vulcan_window
         )
 
     # Leg Module
@@ -271,7 +217,7 @@ def add_biped_creation_modules(vulcan_window: QMainWindow):
     )
     if not ModuleType.BIPED_LEG in vulcan_window.commands:
         vulcan_window.commands[ModuleType.BIPED_LEG] = AddModuleCommand(
-            vulcan_window.root.tree_module_stack, ModuleType.BIPED_LEG, vulcan_window
+            ModuleType.BIPED_LEG, vulcan_window
         )
 
     # Foot Module
@@ -283,7 +229,7 @@ def add_biped_creation_modules(vulcan_window: QMainWindow):
     )
     if not ModuleType.BIPED_FOOT in vulcan_window.commands:
         vulcan_window.commands[ModuleType.BIPED_FOOT] = AddModuleCommand(
-            vulcan_window.root.tree_module_stack, ModuleType.BIPED_FOOT, vulcan_window
+            ModuleType.BIPED_FOOT, vulcan_window
         )
 
     # Add widgets to grid

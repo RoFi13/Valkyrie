@@ -1,9 +1,11 @@
 # Copyright (C) 2024 Robert Wiese - All Rights Reserved.
 """Root Rig Module."""
 
+from __future__ import annotations
 import ast
 import logging
 import os
+from typing import List, TYPE_CHECKING
 
 # Import PySide modules
 from PySide6 import QtCore, QtGui
@@ -15,6 +17,7 @@ from PySide6.QtWidgets import (
     QSizePolicy,
     QSpacerItem,
     QTreeWidget,
+    QTreeWidgetItem,
     QVBoxLayout,
 )
 
@@ -31,6 +34,9 @@ from ..data.ue_skeleton_names import EpicBasicSkeleton
 from ..controls.control_factory import ControlFactory
 from ..util import vulcan_validations
 
+if TYPE_CHECKING:
+    from Rigging.VulcanRig.src.vulcan_rig import VulcanRig
+
 from importlib import reload
 
 reload(module_product_factories)
@@ -46,27 +52,18 @@ LOG = logging.getLogger(os.path.basename(__file__))
 
 
 class RootModule(module_product_factories.ModuleProductFactory):
-    def __init__(self, vulcan_window: QMainWindow):
+    def __init__(self, stack_item: QTreeWidgetItem, vulcan_window: VulcanRig):
         super().__init__(vulcan_window)
 
-        self._current_metadata = module_metadata.RootConfig()
+        self._metadata = module_metadata.RootConfig()
+        self._module_config_type = module_metadata.RootConfig
+        self._stack_item = stack_item
+
         self.hbox_asset_name: QHBoxLayout
         self.lbl_asset_name: QLabel
         self.txt_asset_name: QLineEdit
 
-    def get_metanode_metadata(self):
-        """Get the metanode's metadata.
-
-        Returns:
-            ModuleConfig: Dataclass module's metadata.
-        """
-        metadata_dict = ast.literal_eval(
-            cmds.getAttr(
-                f"{self._current_metadata.metanode}."
-                f"{module_metadata.MetadataAttributes.MODULE_META_ATTRIBUTE.value}"
-            )
-        )
-        return module_metadata.RootConfig(**metadata_dict)
+        self._is_root_module = True
 
     def build_proxy(self):
         # Skipping proxy for Root as all other modules should be built under this.
@@ -77,12 +74,30 @@ class RootModule(module_product_factories.ModuleProductFactory):
         LOG.info("Building Root module...")
         cmds.undoInfo(chunkName="BuildRootModule_chunk", openChunk=True)
 
-        top_group = cmds.group(empty=True, name="Asset")
+        top_group = cmds.group(
+            empty=True, name=module_metadata.RootOrganizeNodes.DEFAULT_TOP_NODE.value
+        )
 
-        joints_group = cmds.group(empty=True, name="JOINTS_GRP", parent=top_group)
-        controls_group = cmds.group(empty=True, name="CONTROLS_GRP", parent=top_group)
-        guts_group = cmds.group(empty=True, name="GUTS_GRP", parent=top_group)
-        modules_group = cmds.group(empty=True, name="MODULES_GRP", parent=top_group)
+        joints_group = cmds.group(
+            empty=True,
+            name=module_metadata.RootOrganizeNodes.JOINTS_GRP.value,
+            parent=top_group,
+        )
+        controls_group = cmds.group(
+            empty=True,
+            name=module_metadata.RootOrganizeNodes.CONTROLS_GRP.value,
+            parent=top_group,
+        )
+        guts_group = cmds.group(
+            empty=True,
+            name=module_metadata.RootOrganizeNodes.GUTS_GRP.value,
+            parent=top_group,
+        )
+        modules_group = cmds.group(
+            empty=True,
+            name=module_metadata.RootOrganizeNodes.MODULES_GRP.value,
+            parent=top_group,
+        )
 
         # Create controllers
         # Create orient controller
@@ -123,8 +138,12 @@ class RootModule(module_product_factories.ModuleProductFactory):
         cmds.parent(EpicBasicSkeleton.PELVIS.value, root_joint)
 
         # Update metadata config
-        self.set_module_metadata(module_metadata.RootConfig(metanode="Asset"))
-
+        self.set_metadata(
+            module_metadata.RootConfig(
+                metanode=module_metadata.RootOrganizeNodes.DEFAULT_TOP_NODE.value,
+                module_type=ModuleType.ROOT.name,
+            )
+        )
         # Lock all group nodes to prevent renaming or reparenting
         cmds.lockNode(
             [top_group, joints_group, controls_group, guts_group, modules_group]
@@ -150,7 +169,7 @@ class RootModule(module_product_factories.ModuleProductFactory):
     def build_details_panel(self):
         put.clear_box_layout(self._vulcan_window.root.vb_details)
 
-        metadata = self.get_module_metadata()
+        metadata = self.get_metadata()
 
         # Build GUI elements for root module
         self.hbox_asset_name = QHBoxLayout()
@@ -172,4 +191,4 @@ class RootModule(module_product_factories.ModuleProductFactory):
     def update_asset_name(self, new_name: str):
         current_metadata = self.get_metanode_metadata()
         current_metadata.asset_name = new_name
-        self.set_module_metadata(current_metadata)
+        self.set_metadata(current_metadata)

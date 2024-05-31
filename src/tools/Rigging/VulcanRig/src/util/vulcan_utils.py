@@ -23,13 +23,11 @@ LOG = logging.getLogger(os.path.basename(__file__))
 def duplicate_joint_chain(
     start_joint: str, end_joint: str, include_twist_joints: bool = False
 ):
-    """
-    Duplicates joint hierarchy given the start and end joints in chain.
-    """
+    """Duplicates joint hierarchy given the start and end joints in chain."""
     # Check to delete twist joints if desired
     if not include_twist_joints:
-        allChildren = cmds.listRelatives(start_joint, allDescendents=True)
-        for child in allChildren:
+        joint_children = cmds.listRelatives(start_joint, allDescendents=True)
+        for child in joint_children:
             if "twist" in child or "Twist" in child:
                 cmds.delete(child)
 

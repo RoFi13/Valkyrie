@@ -23,6 +23,7 @@ from PySide6.QtWidgets import (
     QProgressDialog,
     QPushButton,
     QSpacerItem,
+    QTreeWidget,
     QTreeWidgetItem,
     QVBoxLayout,
     QWidget,
@@ -260,6 +261,7 @@ def clear_box_layout(box_layout: QBoxLayout):
 
 
 def create_line(create_horizontal: bool = True) -> QFrame:
+    """Create either horizontal or vertical line widget."""
     new_line = QFrame()
     if create_horizontal:
         new_line.setFrameShape(QFrame.HLine)
@@ -270,19 +272,29 @@ def create_line(create_horizontal: bool = True) -> QFrame:
     return new_line
 
 
-# TODO: This is dangerous. Don't use when creating new items. Use for existing items?
-def reparent_tree_widget_item(
-    item: QTreeWidgetItem, new_parent_item: QTreeWidgetItem
-) -> None:
-    old_parent = item.parent()
-    if old_parent is None:
-        item_index = item.treeWidget().indexOfTopLevelItem(item)
-        item_without_parent = item.treeWidget().takeTopLevelItem(item_index)
-    else:
-        item_index = old_parent.indexOfChild(item)
-        item_without_parent = old_parent.takeChild(item_index)
+def move_children_to_parent(
+    new_parent_item: QTreeWidgetItem, old_parent_item: QTreeWidgetItem
+):
+    """Move item's child items to a new parent."""
+    new_parent_item.addChildren(old_parent_item.takeChildren())
 
-    new_parent_item.addChild(item_without_parent)
+
+def get_tree_item_children(parent_item: QTreeWidgetItem):
+    """Get QTreeWidgetItem's children item widgets."""
+    return [parent_item.child(i) for i in range(parent_item.childCount())]
+
+
+def remove_tree_item(tree_widget: QTreeWidget, tree_item: QTreeWidgetItem):
+    """Remove QTreeWidgetItem from QTreeWidget."""
+    parent = tree_item.parent()
+    if parent is None:
+        # Item is a top-level item
+        index = tree_widget.indexOfTopLevelItem(tree_item)
+        if index != -1:
+            tree_widget.takeTopLevelItem(index)
+    else:
+        # Item is a child item
+        parent.removeChild(tree_item)
 
 
 if __name__ == "__main__":
