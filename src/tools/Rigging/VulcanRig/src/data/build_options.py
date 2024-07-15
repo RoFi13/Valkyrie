@@ -13,6 +13,7 @@ from Core import core_paths as cpath
 
 from .module_types import ModuleType
 from . import module_metadata
+from .node_affix_types import RigSideTypes
 
 from importlib import reload
 
@@ -46,3 +47,11 @@ class ModuleBuildOptions:
     parent_stack_item: QTreeWidgetItem = None
     module_type: ModuleType = None
     existing_metadata: module_metadata.ModuleConfig = None
+
+
+@dataclass
+class ControllerBuildOptions:
+    controller_type: str = "circle"
+    control_name: str = ""
+    desired_side: RigSideTypes = RigSideTypes.CENTER
+    parent_node: str = ""

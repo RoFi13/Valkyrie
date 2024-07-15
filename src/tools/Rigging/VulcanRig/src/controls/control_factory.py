@@ -35,9 +35,13 @@ from maya import cmds
 from . import control_products
 from .control_vault import BasicControllerTypes, ComplexControllerTypes
 
-from ..data.node_affix_types import RigSideTypes
+from ..data.node_affix_types import MayaSuffixTypes, RigSideTypes
+from ..data.build_options import ControllerBuildOptions
+from Util.UtilTools.src import snapping_utils
 
 from importlib import reload
+
+reload(snapping_utils)
 
 LOG = logging.getLogger(os.path.basename(__file__))
 
@@ -47,28 +51,58 @@ class ControllerFactory(ABC):
     """Main Controller factory."""
 
     @abstractmethod
-    def create_controller(
-        self,
-        desired_type: str,
-        control_name: str = "",
-        desired_side: str = "center",
-        parent: str = None,
-    ):
+    def create_controller(self, build_instructions: ControllerBuildOptions):
         """Create a new Rig controller curve."""
         raise NotImplementedError("You should implement this method")
 
-    def _get_side_enum(self, desired_side: str = "center"):
-        found_key: RigSideTypes
-        match desired_side.lower():
-            case "center":
-                found_key = RigSideTypes.CENTER
-            case "left":
-                found_key = RigSideTypes.LEFT
-            case "right":
-                found_key = RigSideTypes.RIGHT
-        return found_key
+    def create_offset_group(
+        self,
+        name: str,
+        match_node: str = None,
+        match_position: bool = True,
+        match_rotation: bool = True,
+    ) -> str:
+        """Create an empty group at the match controller's location if desired.
 
-    def _parent_controller(self, new_control: str, parent: str):
+        The function does no name changes to the name parameter. If there are any
+        string changes you wish to make, do them before executing this function.
+
+        The match_node parameter is the name of the node in Maya that you wish
+        to potentially match the position and/or rotation to.
+        """
+        new_group = cmds.group(
+            empty=True, name=f"{name}_{MayaSuffixTypes.OFFSET_GROUP.value}"
+        )
+        if len(match_node) is not None:
+            snapping_utils.snap_object(
+                match_node, new_group, match_position, match_rotation
+            )
+
+        return new_group
+
+    def add_offset_group(self, child_control: str) -> str:
+        """Attachs a group offset node above the child controller.
+
+        This moves the child_control object underneath a group offset node.
+        """
+        offset_name = f"{child_control}_{MayaSuffixTypes.OFFSET_GROUP.value}"
+        if "_CTL" in offset_name:
+            offset_name = (
+                f"{offset_name.split('_CTL')[0]}_{MayaSuffixTypes.OFFSET_GROUP.value}"
+            )
+        # offset_group = cmds.group(empty=True, name=offset_name)
+        offset_group = self.create_offset_group(offset_name, child_control)
+        # Get child_control's current parent
+        current_parent = cmds.listRelatives(child_control, parent=True)
+        # Parent child_control to offset group
+        cmds.parent(child_control, offset_group)
+        # Parent offset group to old child_control parent
+        if current_parent is not None:
+            cmds.parent(offset_group, current_parent)
+
+        return offset_group
+
+    def _parent_node(self, new_control: str, parent: str):
         # Parent new controller if desired
         if parent is not None:
             if cmds.objExists(parent):
@@ -84,55 +118,58 @@ class ControllerFactory(ABC):
 class ControlFactory(ControllerFactory):
     """Factory for building new Rig Controller curves."""
 
-    def create_controller(
-        self,
-        desired_type: str,
-        control_name: str = None,
-        desired_side: str = "center",
-        parent: str = None,
-    ):
-        desired_side = self._get_side_enum(desired_side)
+    def create_controller(self, build_instructions: ControllerBuildOptions):
+        # desired_side = self._get_side_enum(build_instructions.desired_side.value)
 
         new_control: str = None
         # Basic Controls here
         for key in BasicControllerTypes:
-            if key.name.lower() == desired_type.lower():
+            if key.name.lower() == build_instructions.controller_type.lower():
                 new_control = control_products.BasicControl().create(
-                    key, control_name=control_name, side=desired_side
+                    key,
+                    control_name=build_instructions.control_name,
+                    side=build_instructions.desired_side,
                 )
-                self._parent_controller(new_control, parent)
+                self._parent_node(new_control, build_instructions.parent_node)
                 return new_control
 
         # Complex Controls here.
-        match desired_type.lower():
+        match build_instructions.controller_type.lower():
             case "circle":
                 new_control = control_products.CircleControl().create(
-                    control_name, side=desired_side
+                    build_instructions.control_name,
+                    side=build_instructions.desired_side,
                 )
             case "sphere":
                 new_control = control_products.SphereControl().create(
-                    control_name, side=desired_side
+                    build_instructions.control_name,
+                    side=build_instructions.desired_side,
                 )
             case "info":
                 new_control = control_products.InfoControl().create(
-                    control_name, side=desired_side
+                    build_instructions.control_name,
+                    side=build_instructions.desired_side,
                 )
             case "eyes":
                 new_control = control_products.EyesControl().create(
-                    control_name, side=desired_side
+                    build_instructions.control_name,
+                    side=build_instructions.desired_side,
                 )
             case "arrow_swap":
                 new_control = control_products.ArrowSwapControl().create(
-                    control_name, side=desired_side
+                    build_instructions.control_name,
+                    side=build_instructions.desired_side,
                 )
             case "pelvis":
                 new_control = control_products.PelvisControl().create(
-                    control_name, side=desired_side
+                    build_instructions.control_name,
+                    side=build_instructions.desired_side,
                 )
             case _:
                 error_msg = (
-                    f"Invalid control name entered: {desired_type}. Please "
-                    "use one of the following valid names:\n"
+                    f"Invalid control name entered: "
+                    f"{build_instructions.controller_type}. Please use one of the "
+                    "following valid names:\n"
                     "------------------------------------------------\n"
                 )
                 for basic_control in BasicControllerTypes:
@@ -144,6 +181,6 @@ class ControlFactory(ControllerFactory):
                 LOG.error(error_msg)
                 return None
 
-        self._parent_controller(new_control, parent)
+        self._parent_node(new_control, build_instructions.parent_node)
 
         return new_control

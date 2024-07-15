@@ -29,6 +29,7 @@ from Core.util import maya_colors
 
 from . import module_product_factories
 from ..data import module_metadata
+from ..data.build_options import ControllerBuildOptions
 from ..data.module_types import ModuleType
 from ..data.ue_skeleton_names import EpicBasicSkeleton
 from ..controls.control_factory import ControlFactory
@@ -100,14 +101,14 @@ class RootModule(module_product_factories.ModuleProductFactory):
         )
 
         # Create controllers
-        # Create orient controller
         control_factory = ControlFactory()
+        # Create orient controller
         orient_ctl = control_factory.create_controller(
-            "orient", "Orient", parent=controls_group
+            ControllerBuildOptions("orient", "Orient", parent_node=controls_group)
         )
         # World offset
         offset_ctl = control_factory.create_controller(
-            "circle", "WorldOffset", parent=orient_ctl
+            ControllerBuildOptions("circle", "WorldOffset", parent_node=orient_ctl)
         )
         cmds.setAttr(f"{offset_ctl}.sx", 5)
         cmds.setAttr(f"{offset_ctl}.sy", 5)
@@ -118,7 +119,7 @@ class RootModule(module_product_factories.ModuleProductFactory):
         )
         # Path Follow offset
         path_follow_ctl = control_factory.create_controller(
-            "chevron", "PathFollow", parent=offset_ctl
+            ControllerBuildOptions("chevron", "PathFollow", parent_node=offset_ctl)
         )
 
         # Change color controller

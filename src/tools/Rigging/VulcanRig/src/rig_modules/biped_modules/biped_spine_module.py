@@ -14,6 +14,8 @@ from Core.ui.UIUtilTools.src import pyside_util_tools as put
 
 from Util.UtilTools.src import maya_pyside_interface as mpi
 
+from . import biped_spine_build
+
 from .. import module_product_factories
 
 from Rigging.VulcanRig.src.data.ue_skeleton_names import EpicBasicSkeleton
@@ -41,6 +43,7 @@ from importlib import reload
 
 reload(module_product_factories)
 reload(vutil)
+reload(biped_spine_build)
 reload(build_options)
 reload(put)
 reload(mpi)
@@ -180,6 +183,13 @@ class BipedSpineModule(module_product_factories.ModuleProductFactory):
             lambda: mpi.add_selection_to_textfield(self.txt_end_joint)
         )
         self.btn_rename_module.clicked.connect(self.rename_module)
+        self.btn_build_rig.clicked.connect(self.generate_spine)
+
+    def generate_spine(self):
+        """Build the actual Maya rig system."""
+        biped_spine_build.generate_spine_module(
+            self.txt_start_joint.text(), self.txt_end_joint.text()
+        )
 
     def set_details_panel_defaults(self):
         """Set Module's detail panel default values."""
