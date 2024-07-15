@@ -350,3 +350,15 @@ pip-delete-this-directory.txt
 .cache
 nosetests.xml
 coverage.xml
+
+# Include FBX files
+!*.fbx
+
+# Include UI files
+!*.ui
+
+# Include icon files
+!*.png
+!*.psd
+!*.jpg
+!*.gif

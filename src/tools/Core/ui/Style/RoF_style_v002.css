@@ -99,6 +99,16 @@ QLineEdit {
     /* Slightly lighter gray for edit backgrounds */
 }
 
+QLineEdit:disabled {
+    border: 1px solid #2A2A2A;
+    /* Darker Gray border for disabled line edits */
+    padding: 2px;
+    background-color: #2A2A2A;
+    /* Darker background color for disabled line edits */
+    color: #7A7A7A;
+    /* Gray text color for disabled line edits */
+}
+
 QMenuBar {
     background-color: #272626;
     /* Dark Gray for menu bar */
@@ -319,4 +329,68 @@ QFrame[frameShape="5"] { /* 5 corresponds to QFrame::VLine */
     background-color: #989898; /* Accent color */
     width: 1px; /* Thickness of the vertical line */
     margin: 0px 5px; /* Horizontal margin, adjust as needed */
+}
+
+QTreeWidget {
+    border: 1px solid #5A5858; /* Medium Gray border */
+    background-color: #272626; /* Dark Gray background to match the theme */
+    color: #FDFCFC; /* Off White text for better readability */
+    show-decoration-selected: 1; /* Ensure selections are clearly indicated */
+}
+
+QTreeWidget::item {
+    border-bottom: 1px solid #3A3A3A; /* Slightly lighter gray for item separation */
+    padding: 4px; /* Comfortable padding around text */
+}
+
+QTreeWidget::item:selected {
+    background-color: #4d88e8; /* Accent color for selection */
+    color: #FDFCFC; /* Off White text color for selected items */
+}
+
+QTreeWidget::item:selected:!active {
+    background-color: #4d88e8; /* Keep the selection color when widget is not focused */
+    color: #FDFCFC;
+}
+
+QTreeWidget::branch {
+    background: #272626; /* Background color for branch area */
+}
+
+QTreeWidget::branch:selected {
+    background: #4d88e8; /* Accent color for selected branches */
+}
+
+/* Styling for the expand/collapse icons */
+/* QTreeWidget::indicator:open {
+    image: url(shared_icons:stylesheet_branch_open.png);
+}
+
+QTreeWidget::indicator:closed {
+    image: url(shared_icons:stylesheet_branch_closed.png);
+} */
+
+/*These are if you want lines connecting below the items*/
+QTreeView::branch:has-siblings:!adjoins-item {
+    border-image: url(shared_icons:treeWidget/vline.png) 0;
+}
+
+QTreeView::branch:has-siblings:adjoins-item {
+    border-image: url(shared_icons:treeWidget/branch-more.png) 0;
+}
+
+QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+    border-image: url(shared_icons:treeWidget/branch-end.png) 0;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+        border-image: none;
+        image: url(shared_icons:treeWidget/branch-closed.png);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  {
+        border-image: none;
+        image: url(shared_icons:treeWidget/branch-open.png);
 }

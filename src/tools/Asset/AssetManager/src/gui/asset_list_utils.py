@@ -116,12 +116,13 @@ def add_asset_widget(tool_object: QMainWindow, asset_object: val.ValkyrieAsset):
     )
 
     # Set text and images for new widget
-    asset_pixmap = QtGui.QPixmap(asset_object.get_asset_preview_path())
-    asset_main_widget.lbl_asset_preview.setPixmap(asset_pixmap)
-    asset_main_widget.lbl_asset_preview.setScaledContents(True)
-
     # Set asset name
     asset_main_widget.lbl_asset_name.setText(asset_object.get_asset_name())
+
+    if asset_object.get_asset_preview_path() is not None:
+        asset_pixmap = QtGui.QPixmap(asset_object.get_asset_preview_path())
+        asset_main_widget.lbl_asset_preview.setPixmap(asset_pixmap)
+        asset_main_widget.lbl_asset_preview.setScaledContents(True)
 
     return new_asset_item
 

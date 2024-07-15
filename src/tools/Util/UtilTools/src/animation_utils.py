@@ -38,3 +38,39 @@ def set_keys_to_auto_tangents():
     cmds.selectKey(clear=True)
     cmds.selectKey(selection, attribute=all_attributes, keyframe=True, addTo=True)
     cmds.keyTangent(inTangentType="auto", outTangentType="auto")
+
+
+def reset_transforms(
+    node: str, translation: bool = True, rotation: bool = True, scale: bool = True
+):
+    """Reset transform attributes on Maya node."""
+    if translation:
+        cmds.setAttr(f"{node}.tx", 0)
+        cmds.setAttr(f"{node}.ty", 0)
+        cmds.setAttr(f"{node}.tz", 0)
+    if rotation:
+        cmds.setAttr(f"{node}.rx", 0)
+        cmds.setAttr(f"{node}.ry", 0)
+        cmds.setAttr(f"{node}.rz", 0)
+    if scale:
+        cmds.setAttr(f"{node}.sx", 1)
+        cmds.setAttr(f"{node}.sy", 1)
+        cmds.setAttr(f"{node}.sz", 1)
+
+
+# def freeze_transforms(node: str, translation: bool = True, rotation: bool = True, scale: bool = True):
+#     cmds.makeIdentity(
+#             apply=True, translate=True, rotate=True, scale=True, normal=False
+#         )
+#     if translation:
+#         cmds.setAttr(f"{node}.tx", 0)
+#         cmds.setAttr(f"{node}.ty", 0)
+#         cmds.setAttr(f"{node}.tz", 0)
+#     if rotation:
+#         cmds.setAttr(f"{node}.rx", 0)
+#         cmds.setAttr(f"{node}.ry", 0)
+#         cmds.setAttr(f"{node}.rz", 0)
+#     if scale:
+#         cmds.setAttr(f"{node}.sx", 1)
+#         cmds.setAttr(f"{node}.sy", 1)
+#         cmds.setAttr(f"{node}.sz", 1)
