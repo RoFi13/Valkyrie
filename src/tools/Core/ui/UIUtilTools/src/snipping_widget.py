@@ -5,7 +5,16 @@
 import logging
 import os
 
-from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtWidgets
+from PySide6.QtGui import (
+    QColor,
+    QCursor,
+    QGuiApplication,
+    QPainter,
+    QPen,
+    QPixmap,
+    QScreen,
+)
 
 from Core import core_paths as cpath
 
@@ -51,7 +60,7 @@ class CustomPreviewButton(QtWidgets.QLabel):
         # Set the qLabel's current image path as the default icon
         self.current_image_path = self.default_preview_icon
         # Set default image for qLabel
-        self.image_pix = QtGui.QPixmap(self.default_preview_icon)
+        self.image_pix = QPixmap(self.default_preview_icon)
         # Resize to fit qLabel
         self.resized_pix = self.image_pix.scaled(
             200, 200, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation
@@ -85,7 +94,7 @@ class CustomPreviewButton(QtWidgets.QLabel):
     def set_preview_widget(self, preview_path):
         """Set the qLabel's image to the newly rendered image."""
         # Create pixmap for preview still image
-        preview_pix = QtGui.QPixmap(preview_path)
+        preview_pix = QPixmap(preview_path)
         # Scale keeping aspect ratio of preview image to size of qLabel widget
         resized_preview_pix = preview_pix.scaled(
             200, 200, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation
@@ -98,7 +107,7 @@ class CustomPreviewButton(QtWidgets.QLabel):
     def reset_preview_widget(self):
         """Set the label's image back to the default image."""
         # Set default image for qLabel
-        self.image_pix = QtGui.QPixmap(self.default_preview_icon)
+        self.image_pix = QPixmap(self.default_preview_icon)
         # Resize to fit qLabel
         self.resized_pix = self.image_pix.scaled(
             200, 200, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation
@@ -146,7 +155,7 @@ class SnippingWidget(QtWidgets.QWidget):
         """Start function of a show."""
         SnippingWidget.IS_SNIPPING = True
         self.setWindowOpacity(0.3)
-        QtWidgets.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
+        QtWidgets.QApplication.setOverrideCursor(QCursor(QtCore.Qt.CrossCursor))
         self.show()
 
     def paintEvent(  # Overriden method. pylint: disable=invalid-name
@@ -165,9 +174,9 @@ class SnippingWidget(QtWidgets.QWidget):
             opacity = 0
 
         self.setWindowOpacity(opacity)
-        q_point = QtGui.QPainter(self)
-        q_point.setPen(QtGui.QPen(QtGui.QColor("black"), line_width))
-        q_point.setBrush(QtGui.QColor(*brush_color))
+        q_point = QPainter(self)
+        q_point.setPen(QPen(QColor("black"), line_width))
+        q_point.setBrush(QColor(*brush_color))
         rect = QtCore.QRectF(self.begin, self.end)
         q_point.drawRect(rect)
 
@@ -201,19 +210,12 @@ class SnippingWidget(QtWidgets.QWidget):
         self.repaint()
         QtWidgets.QApplication.processEvents()
 
-        img = QtGui.QPixmap.grabWindow(
-            QtWidgets.QApplication.desktop().winId(),
-            min_x,
-            min_y,
-            max_x - min_x,
-            max_y - min_y,
-        )
+        screen = QGuiApplication.primaryScreen()
+        img = screen.grabWindow(0, min_x, min_y, max_x - min_x, max_y - min_y)
 
         if self.on_snipping_completed is not None:
             self.on_snipping_completed(img)
-            QtWidgets.QApplication.setOverrideCursor(
-                QtGui.QCursor(QtCore.Qt.ArrowCursor)
-            )
+            QtWidgets.QApplication.setOverrideCursor(QCursor(QtCore.Qt.ArrowCursor))
 
         self.deleteLater()
         self.close()

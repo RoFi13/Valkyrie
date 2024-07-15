@@ -3,33 +3,50 @@
 
 import logging
 import os
+from typing import List
 
 from maya import cmds
 
 LOG = logging.getLogger(os.path.basename(__file__))
 
 
-def snap_object():
+def snap_object(
+    driver: str = None,
+    driven: str = None,
+    match_position: bool = True,
+    match_rotation: bool = True,
+):
     """Move second selected object to the first selected object.
 
     Moves and orients rotation of second object to the first selected object.
     """
-    selection = cmds.ls(selection=True)
-
-    logging.debug("Selection number: %s", len(selection))
-    if not len(selection) == 2:
-        raise IndexError("User must select two objects in scene.")
+    if driver is None and driven is None:
+        selection = cmds.ls(selection=True)
+        if not len(selection) == 2:
+            raise IndexError("User must select two objects in scene.")
+        driver = selection[0]
+        driven = selection[1]
 
     # Check if driven object has connections already
     for attribute in ["tx", "ty", "tz", "rx", "ry", "rz"]:
-        if check_for_existing_connection(selection[1], attribute):
+        if check_for_existing_connection(driven, attribute):
             raise RuntimeError("Second selected object already has connection.")
     # Create constraint to move second object to first object's location
     # and rotation
     try:
-        new_constraint = cmds.parentConstraint(
-            selection[0], selection[1], maintainOffset=False
-        )[0]
+        if match_position and match_rotation:
+            new_constraint = cmds.parentConstraint(
+                driver, driven, maintainOffset=False
+            )[0]
+        if match_position and not match_rotation:
+            new_constraint = cmds.pointConstraint(driver, driven, maintainOffset=False)[
+                0
+            ]
+        if not match_position and match_rotation:
+            new_constraint = cmds.orientConstraint(
+                driver, driven, maintainOffset=False
+            )[0]
+
     except RuntimeError as exc:
         raise RuntimeError(
             "Driven object transforms locked. Failed to constrain."
