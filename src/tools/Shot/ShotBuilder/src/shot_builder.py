@@ -1,5 +1,7 @@
 """Put tool description and usage in here."""
 
+__version__ = "0.0.1"
+
 import json
 import logging
 import os
