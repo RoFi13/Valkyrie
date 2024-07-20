@@ -1,0 +1,64 @@
+- Show:
+  - label:    Set Current Show
+    command:  print("bob")
+    lang:     python
+
+- Asset:
+  - label:    Asset Manager
+    command:  from Asset.AssetManager.src import asset_manager as aman;from importlib import reload;reload(aman);aman.run_maya()
+    lang:     python
+
+  - label:    Test
+    command:  from Asset.AssetManager.src import asset_manager as aman;from importlib import reload;reload(aman);aman.run_maya()
+    lang:     python
+
+  - Modeling:
+    - Shader:
+      - label:    Select Shader
+        command:  from Util.UtilTools.src import shader_utils as shu;from importlib import reload;reload(shu);shu.select_shader()
+        lang:     python
+
+      - label:    Share Shader
+        command:  from Util.UtilTools.src import shader_utils as shu;from importlib import reload;reload(shu);shu.share_shader()
+        lang:     python
+
+- Rigging:
+  - label:    Vulcan Rigger
+    command:  from Rigging.VulcanRig.src import vulcan_rig as vulc;from importlib import reload;reload(vulc);vulc.run_maya()
+    lang:     python
+  - label:    Old Vulcan Rigger
+    command:  from Rigging.VulcanRig_old.src import vulcan_rig as ovulc;from importlib import reload;reload(ovulc);ovulc.run_maya()
+    lang:     python
+  - label:    Matrix Constrainer
+    command:  from Rigging.MatrixConstrainer.src import matrix_constraints as matcon;from importlib import reload;reload(matcon);matcon.run_maya()
+    lang:     python
+
+- Shot:
+  - label:    Shot Builder
+    command:  from Shot.ShotBuilder.src import shot_builder as sb;from importlib import reload;reload(sb);sb.run_maya()
+    lang:     python
+
+- Utility:
+  - File:
+    - label:    Version Up File
+      command:  from Util.UtilTools.src import util_tools as ut;from importlib import reload;reload(ut);ut.version_up_file()
+      lang:     python
+
+  - Selection:
+    - label:    Select First Children
+      command:  from Util.UtilTools.src import selection_utils as su;from importlib import reload;reload(su);su.select_children()
+      lang:     python
+    - label:    Select All Children
+      command:  from Util.UtilTools.src import selection_utils as su;from importlib import reload;reload(su);su.select_children(True)
+      lang:     python
+    - label:    Select First Geometry Children
+      command:  from Util.UtilTools.src import selection_utils as su;from importlib import reload;reload(su);su.select_children(False, True)
+      lang:     python
+    - label:    Select All Geometry Children
+      command:  from Util.UtilTools.src import selection_utils as su;from importlib import reload;reload(su);su.select_children(True, True)
+      lang:     python
+
+- TD Tools:
+  - label:    Refresh Pipe Tools
+    command:  from maya import cmds;cmds.evalDeferred("from Core.menu.PipeMenu.src import build_pipe_menu as pipe;from importlib import reload;reload(pipe);pipe.reload_menu()")
+    lang:     python
