@@ -83,7 +83,7 @@ class AssetWidgetItem(QtWidgets.QListWidgetItem):
         if len(self.asset_variations[variation].get_published_versions()) == 0:
             LOG.warning(
                 "No published maya file versions found in: %s",
-                self.asset_variations[variation],
+                self.asset_variations[variation].get_variant_name(),
             )
             return {}
 
