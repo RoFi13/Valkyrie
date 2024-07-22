@@ -75,7 +75,7 @@ def update_asset_list(
         new_asset_object = val.ValkyrieAsset(asset, asset_path)
         new_asset_preview_path = amu.get_asset_preview(asset_path, asset)
         if new_asset_preview_path is None:
-            new_asset_preview_path = f"{RSRC_PATH}/images/Select_file_preview.png"
+            new_asset_preview_path = f"{RSRC_PATH}/images/No_preview.png"
 
         new_asset_object.set_asset_preview_path(new_asset_preview_path)
 

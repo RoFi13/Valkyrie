@@ -3,7 +3,9 @@
 This module is to create both a APB/wip (asset pre-build) or a Published Maya
 file.
 """
-# Can't find PySide2 modules pylint: disable=I1101
+# Can't find PySide6 modules pylint: disable=I1101
+
+__version__ = "1.0.1"
 
 from functools import partial
 import logging
@@ -151,8 +153,10 @@ class AssetManager(QtWidgets.QMainWindow):
 
         Store widgets as simplifed name and sets up starting state of UI
         """
-        # Update current show qLabel text
+        # Update current show qLabel text and tool version
         self.root.lbl_current_project.setText((self.current_project).upper())
+        self.root.lbl_tool_version.setText(__version__)
+
         # Update default variation preview image
         put.set_label_pixmap(
             self.root.lbl_variation_preview,

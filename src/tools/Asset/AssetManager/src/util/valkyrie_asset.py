@@ -163,6 +163,14 @@ class ValkyrieAssetVariant:
         LOG.info("Retrieving published versions...")
         self._published_versions = {}
 
+        if not os.path.exists(f"{self._variant_path}/Publish"):
+            LOG.error(
+                "Invalid Asset Path! Asset Folder structure may not be "
+                "compatible or built with Asset Manager. Please check path at: %s",
+                f"{self._variant_path}/Publish",
+            )
+            return
+
         # Get published version folders for variation
         asset_versions = fut.get_files_or_folders(
             f"{self._variant_path}/Publish", False, True, "v[0-9]{3,4}"
@@ -194,6 +202,14 @@ class ValkyrieAssetVariant:
             list(str): List of paths to apb/wip maya files for variation.
         """
         LOG.info("Retrieving apb versions...")
+        if not os.path.exists(f"{self._variant_path}/APB/Maya"):
+            LOG.error(
+                "Invalid Asset Path! Asset Folder structure may not be "
+                "compatible or built with Asset Manager. Please check path at: %s",
+                f"{self._variant_path}/APB/Maya",
+            )
+            return
+
         # Get published version folders for variation
         asset_versions = fut.get_files_or_folders(
             f"{self._variant_path}/APB/Maya",
