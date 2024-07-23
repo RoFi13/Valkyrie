@@ -7,9 +7,8 @@
   - label:    Asset Manager
     command:  from Asset.AssetManager.src import asset_manager as aman;from importlib import reload;reload(aman);aman.run_maya()
     lang:     python
-
-  - label:    Test
-    command:  from Asset.AssetManager.src import asset_manager as aman;from importlib import reload;reload(aman);aman.run_maya()
+  - label:    Asset Loader
+    command:  from Asset.AssetLoader.src import asset_loader as aload;from importlib import reload;reload(aload);aload.run_maya()
     lang:     python
 
   - Modeling:
