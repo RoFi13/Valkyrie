@@ -185,9 +185,6 @@ class AssetManager(QtWidgets.QMainWindow):
 
     def setup_signals(self):
         """Connect signals to methods."""
-        # self.root.cbo_categories.currentTextChanged.connect(
-        #     partial(alu.update_asset_list, self)
-        # )
         self.root.cbo_categories.currentTextChanged.connect(self.refresh_ui)
 
         self.root.list_asset_previews.itemClicked.connect(alu.asset_selection_changed)
