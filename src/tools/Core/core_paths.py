@@ -74,7 +74,9 @@ def core_paths():
     return paths_dict
 
 
-def get_parent_directory(starting_path: str, level: int = 0):
+def get_parent_directory(
+    starting_path: str, level: int = 0, return_full_path: bool = True
+) -> str:
     """Get parent directory at specific level above starting path.
 
     Args:
@@ -85,7 +87,10 @@ def get_parent_directory(starting_path: str, level: int = 0):
         str: Path to directory above starting path.
     """
     current_path = PurePath(starting_path)
-    return str(current_path.parents[level]).replace("\\", "/")
+    if return_full_path:
+        return str(current_path.parents[level]).replace("\\", "/")
+
+    return str(current_path.parents[level]).rsplit("\\", maxsplit=1)[-1]
 
 
 def get_module_paths(starting_path: str):
