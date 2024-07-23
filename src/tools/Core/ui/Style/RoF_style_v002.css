@@ -1,6 +1,6 @@
 /*
 Qt6 Stylesheet for dark theme with a modern and minimalist design.
-Accent Colors: #333333 (Blue)
+Accent Colors: #24a7f2 (Blue)
 Neutral Colors: #272626 (Dark Gray), #5A5858 (Medium Gray), #FDFCFC (Off White)
 */
 
@@ -393,4 +393,22 @@ QTreeView::branch:open:has-children:!has-siblings,
 QTreeView::branch:open:has-children:has-siblings  {
         border-image: none;
         image: url(shared_icons:treeWidget/branch-open.png);
+}
+
+QRadioButton::indicator::unchecked{
+    border: 1px solid;
+    border-color: rgb(132,132,132);
+    border-radius: 5px;
+    background-color: #5A5858;
+    width: 11px;
+    height: 11px;
+}
+
+QRadioButton::indicator::checked{
+    border: 3px solid;
+    border-color: #5A5858;
+    border-radius: 6px;
+    background-color: #FDFCFC;
+    width: 7px;
+    height: 7px;
 }

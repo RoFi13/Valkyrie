@@ -29,8 +29,13 @@ def get_files_or_folders(
         list: If more than 0 folders are found, return list of folders. Return full paths
             if requested. Otherwise, returns None.
     """
+    if not os.path.exists(starting_directory):
+        LOG.warning("Directory path doesn't exist at: %s", starting_directory)
+        return []
+
     # Names in the given directory
     objects = os.listdir(starting_directory)
+    found_paths = []
     object_names = []
     object_paths = []
     # Iterate over all the entries
@@ -57,15 +62,16 @@ def get_files_or_folders(
 
     if len(object_names) == 0:
         LOG.info("No files/folders found.")
-        return None
+        return []
 
     object_names.sort()
     object_paths.sort()
 
+    found_paths = object_names
     if full_path is True:
-        return object_paths
+        found_paths = object_paths
 
-    return object_names
+    return found_paths
 
 
 def get_json_data(json_path: str):

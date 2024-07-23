@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (
     QGridLayout,
     QHBoxLayout,
     QLabel,
+    QLineEdit,
     QMainWindow,
     QProgressDialog,
     QPushButton,
@@ -139,8 +140,10 @@ def set_label_pixmap(label: QLabel, image_path: str):
     """
 
     new_pixmap = QtGui.QPixmap(image_path)
-    label.setPixmap(new_pixmap)
     label.setScaledContents(True)
+    label.setPixmap(
+        new_pixmap.scaled(label.width(), label.height(), QtCore.Qt.KeepAspectRatio)
+    )
 
 
 def create_progress_bar(
@@ -295,6 +298,13 @@ def remove_tree_item(tree_widget: QTreeWidget, tree_item: QTreeWidgetItem):
     else:
         # Item is a child item
         parent.removeChild(tree_item)
+
+
+def add_line_edit_regex(line_widget: QLineEdit, regex_pattern: str) -> None:
+    line_regex_obj = QtCore.QRegularExpression(regex_pattern)
+    line_regex_validator = QtGui.QRegularExpressionValidator(line_regex_obj)
+    # Assign text validators
+    line_widget.setValidator(line_regex_validator)
 
 
 if __name__ == "__main__":
