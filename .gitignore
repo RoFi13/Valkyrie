@@ -126,6 +126,7 @@ placeholder_file.txt
 !FAQ
 !VERSION
 !ChangeLog
+!changelog.rst
 
 # Ignore Unix backup files
 *~
