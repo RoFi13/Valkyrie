@@ -2,11 +2,14 @@
 """Asset Manager grid utility functions."""
 # Can't find PySide2 modules pylint: disable=I1101
 
+from __future__ import annotations
 from functools import partial
 import logging
 import os
+from typing import TYPE_CHECKING
 
-from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6 import QtGui, QtWidgets
+from PySide6.QtCore import Qt, QSize
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QMainWindow
 
@@ -30,28 +33,16 @@ MODULE_PATH = f"{cpath.get_parent_directory(__file__, 2)}"
 
 # Full path to where resource files are stored
 RSRC_PATH = f"{MODULE_PATH}/resources"
-NO_PREVIEW_IMAGE_PATH = f"{RSRC_PATH}/images/Select_file_preview.png"
-ASSET_WIDGET_UI_PATH = f"{RSRC_PATH}/ui/asset_widget.ui"
+NO_PREVIEW_IMAGE_PATH = f"{RSRC_PATH}/images/No_preview.png"
 
 LOG = logging.getLogger(os.path.basename(__file__))
 
 
 def update_asset_list(
-    tool_object: QMainWindow, *args
-):  # Unsure what pylint: disable=unused-argument
-    """Update main asset list items.
-
-    Args:
-        tool_object (QMainWindow): Main tool window object.
-        args: Any extra arguments.
-    """
+    tool_object: QMainWindow, asset_item_size: QSize = QSize(128, 144)
+):
     LOG.debug("Project Assets root directory: %s", tool_object.asset_root_directory)
 
-    # Reset UI panels
-    tool_object.root.list_asset_previews.clear()
-    tool_object.root.list_published_files.clear()
-    tool_object.root.list_apb_files.clear()
-    tool_object.root.cbo_variations.clear()
     # Update default variation preview image
     put.set_label_pixmap(tool_object.root.lbl_variation_preview, NO_PREVIEW_IMAGE_PATH)
     tool_object.current_variation_preview = NO_PREVIEW_IMAGE_PATH
@@ -65,7 +56,7 @@ def update_asset_list(
         asset_category_path, False, False, "^[a-zA-Z0-9]+$"
     )
 
-    if asset_names is None:
+    if not asset_names:
         LOG.warning("No asset folders found in: %s", asset_category_path)
         return
 
@@ -81,10 +72,14 @@ def update_asset_list(
 
         amu.get_asset_variations(new_asset_object)
 
-        add_asset_widget(tool_object, new_asset_object)
+        add_asset_widget(tool_object, new_asset_object, item_size=asset_item_size)
 
 
-def add_asset_widget(tool_object: QMainWindow, asset_object: val.ValkyrieAsset):
+def add_asset_widget(
+    tool_object: QMainWindow,
+    asset_object: val.ValkyrieAsset,
+    item_size: QSize = QSize(128, 144),
+):
     """Add Asset as widget to main asset list widget.
 
     The dictionary returned is in the following format:
@@ -107,7 +102,7 @@ def add_asset_widget(tool_object: QMainWindow, asset_object: val.ValkyrieAsset):
         tool_object.root.list_asset_previews, asset_object, tool_object
     )
     # Set vertical size of new item
-    new_asset_item.setSizeHint(QtCore.QSize(128, 144))
+    new_asset_item.setSizeHint(item_size)
 
     # Add new widget
     tool_object.root.list_asset_previews.addItem(new_asset_item)
@@ -116,13 +111,11 @@ def add_asset_widget(tool_object: QMainWindow, asset_object: val.ValkyrieAsset):
     )
 
     # Set text and images for new widget
-    # Set asset name
     asset_main_widget.lbl_asset_name.setText(asset_object.get_asset_name())
-
     if asset_object.get_asset_preview_path() is not None:
-        asset_pixmap = QtGui.QPixmap(asset_object.get_asset_preview_path())
-        asset_main_widget.lbl_asset_preview.setPixmap(asset_pixmap)
-        asset_main_widget.lbl_asset_preview.setScaledContents(True)
+        put.set_label_pixmap(
+            asset_main_widget.lbl_asset_preview, asset_object.get_asset_preview_path()
+        )
 
     return new_asset_item
 
@@ -162,7 +155,7 @@ def add_file_widget(
     )
 
     # Set vertical size of new item
-    new_asset_item.setSizeHint(QtCore.QSize(128, 39))
+    new_asset_item.setSizeHint(QSize(128, 39))
 
     # Add new widget
     LOG.debug("Updating LIST WIDGET: %s", list_to_populate)

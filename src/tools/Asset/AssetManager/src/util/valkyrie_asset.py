@@ -176,7 +176,7 @@ class ValkyrieAssetVariant:
             f"{self._variant_path}/Publish", False, True, "v[0-9]{3,4}"
         )
 
-        if asset_versions is None:
+        if not asset_versions:
             return
 
         for version_path in asset_versions:
@@ -218,7 +218,7 @@ class ValkyrieAssetVariant:
             PROJECT_CONFIGS["asset_pre_build_maya_file_regex"],
         )
 
-        if asset_versions is None:
+        if not asset_versions:
             self._apb_versions = []
 
         self._apb_versions = asset_versions
@@ -234,6 +234,7 @@ class ValkyrieAsset:
             asset_name (str): New Asset name.
             asset_path (str): New Asset root directory path.
         """
+        self._asset_category: str
         self._asset_name: str
         self._asset_path: str
 
@@ -241,12 +242,21 @@ class ValkyrieAsset:
         self._asset_metadata_path: str
         self._asset_variations = {}
 
+        self.set_asset_category(
+            cpath.get_parent_directory(asset_path, return_full_path=False)
+        )
         self.set_asset_name(asset_name)
         self.set_asset_path(asset_path)
         self.set_asset_metadata_path(
             PurePath(asset_path, f"{asset_name}_metadata.json")
         )
         self.set_asset_preview_path(NO_PREVIEW_IMAGE_PATH)
+
+    def set_asset_category(self, new_category: str) -> None:
+        self._asset_category = new_category
+
+    def get_asset_category(self) -> str:
+        return self._asset_category
 
     def set_asset_name(self, new_name: str):
         """Set Asset's name.

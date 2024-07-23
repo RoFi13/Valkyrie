@@ -53,7 +53,7 @@ def get_asset_variations(asset_object: val.ValkyrieAsset):
     variations = fut.get_files_or_folders(
         asset_object.get_asset_path(), False, True, "[a-zA-Z]+"
     )
-    if variations is None:
+    if not variations:
         return
 
     for variation_path in variations:
