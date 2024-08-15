@@ -38,7 +38,7 @@ class AssetWidgetItem(QtWidgets.QListWidgetItem):
         self.tool_object = tool_object
         self.root_object = tool_object.root
 
-        self.asset_object = asset_object
+        self._valkyrie_asset = asset_object
         self.asset_name: str
         self.asset_path: str
         self.asset_preview: str
@@ -47,13 +47,19 @@ class AssetWidgetItem(QtWidgets.QListWidgetItem):
 
         self.set_asset_details()
 
+    def set_valkyrie_asset(self, new_asset_object: val.ValkyrieAsset):
+        self._valkyrie_asset = new_asset_object
+
+    def get_valkyrie_asset(self):
+        return self._valkyrie_asset
+
     def set_asset_details(self):
         """Set list widget item's asset details."""
-        self.asset_name = self.asset_object.get_asset_name()
-        self.asset_path = self.asset_object.get_asset_path()
-        self.asset_preview = self.asset_object.get_asset_preview_path()
-        self.asset_metadata = self.asset_object.get_asset_metadata_path()
-        self.asset_variations = self.asset_object.get_all_asset_variants()
+        self.asset_name = self._valkyrie_asset.get_asset_name()
+        self.asset_path = self._valkyrie_asset.get_asset_path()
+        self.asset_preview = self._valkyrie_asset.get_asset_preview_path()
+        self.asset_metadata = self._valkyrie_asset.get_asset_metadata_path()
+        self.asset_variations = self._valkyrie_asset.get_all_asset_variants()
 
     def get_variation_names(self):
         """Get asset variation names.
@@ -79,18 +85,13 @@ class AssetWidgetItem(QtWidgets.QListWidgetItem):
                     }
                 }
         """
-        LOG.debug("Variation Dictionary: %s", self.asset_variations)
-        if len(self.asset_variations[variation].get_published_versions()) == 0:
-            LOG.warning(
-                "No published maya file versions found in: %s",
-                self.asset_variations[variation].get_variant_name(),
-            )
+        if len(self.asset_variations) == 0:
+            LOG.warning("Asset Item '%s' has no valid variations.", self.asset_name)
             return {}
 
+        published_versions = self.asset_variations[variation].get_published_versions()
         maya_file_details = {}
-        for version, version_details in (
-            self.asset_variations[variation].get_published_versions().items()
-        ):
+        for version, version_details in published_versions.items():
             LOG.info(
                 "Getting %s variation published maya file for version: %s...",
                 variation,

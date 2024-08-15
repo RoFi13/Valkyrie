@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>522</width>
-    <height>150</height>
+    <width>432</width>
+    <height>86</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,14 +18,14 @@
     <widget class="QLabel" name="lbl_asset_preview">
      <property name="minimumSize">
       <size>
-       <width>128</width>
-       <height>128</height>
+       <width>64</width>
+       <height>64</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>128</width>
-       <height>128</height>
+       <width>64</width>
+       <height>64</height>
       </size>
      </property>
      <property name="frameShape">

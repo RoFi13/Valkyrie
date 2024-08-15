@@ -164,7 +164,7 @@ class AssetManager(QtWidgets.QMainWindow):
         )
         self.current_variation_preview = f"{RSRC_PATH}/images/Select_file_preview.png"
 
-        alu.update_asset_list(self)
+        self.refresh_ui()
 
         # Regular expression, all alphanumeric characters
         agu.set_asset_naming_validators(self.root)
@@ -185,9 +185,7 @@ class AssetManager(QtWidgets.QMainWindow):
 
     def setup_signals(self):
         """Connect signals to methods."""
-        self.root.cbo_categories.currentTextChanged.connect(
-            partial(alu.update_asset_list, self)
-        )
+        self.root.cbo_categories.currentTextChanged.connect(self.refresh_ui)
 
         self.root.list_asset_previews.itemClicked.connect(alu.asset_selection_changed)
 
@@ -212,6 +210,14 @@ class AssetManager(QtWidgets.QMainWindow):
 
         # Publish section
         self.root.btn_publish.clicked.connect(self.publish_asset)
+
+    def refresh_ui(self):
+        self.root.list_asset_previews.clear()
+        self.root.list_published_files.clear()
+        self.root.list_apb_files.clear()
+        self.root.cbo_variations.clear()
+
+        alu.update_asset_list(self)
 
     def build_apb_asset(self):
         """Build APB (wip) asset from user choices."""
@@ -255,7 +261,7 @@ class AssetManager(QtWidgets.QMainWindow):
         mfut.repath_textures(apb_file_details["textures_directory"], self)
 
         # Refresh UI
-        alu.update_asset_list(self)
+        self.refresh_ui()
 
         # Select new/existing asset again to refresh other parts of the UI
         for asset in self.root.list_asset_previews.findItems("", QtCore.Qt.MatchRegExp):
@@ -350,7 +356,7 @@ class AssetManager(QtWidgets.QMainWindow):
         cmds.file(force=True, save=True, options="v=0;", type="mayaBinary")
 
         # Refresh UI
-        alu.update_asset_list(self)
+        self.refresh_ui()
 
         # Select new/existing asset again to refresh other parts of the UI
         for asset in self.root.list_asset_previews.findItems("", QtCore.Qt.MatchRegExp):
@@ -425,7 +431,7 @@ class AssetManager(QtWidgets.QMainWindow):
             asset_details["asset_category"]
         )
 
-        if apb_files is None:
+        if not apb_files:
             final_file_details = {
                 "version": "v001",
                 "file_path": (
@@ -490,7 +496,7 @@ class AssetManager(QtWidgets.QMainWindow):
             asset_details["asset_category"]
         )
 
-        if published_directories is None:
+        if not published_directories:
             final_file_details = {
                 "version": "v001",
                 "file_path": (
@@ -559,7 +565,7 @@ class AssetManager(QtWidgets.QMainWindow):
 
         return versioned_up_file_details
 
-    def close_event(self):
+    def closeEvent(self):  # Qt Override pylint:disable=C0103
         """Delete UI widget."""
         # Get grab preview qlabel widget
         grab_preview_widg = self.root.center_content_HL.itemAt(0).widget()
