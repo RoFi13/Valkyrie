@@ -363,3 +363,6 @@ coverage.xml
 !*.psd
 !*.jpg
 !*.gif
+
+# Exclude venv files
+.venv/
