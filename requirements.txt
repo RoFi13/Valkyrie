@@ -1,3 +1,5 @@
 p4python==2023.1.2477632
 pyperclip==1.9.0
+PySide2==5.15.2.1
 PyYAML==6.0.2
+shiboken2==5.15.2.1
