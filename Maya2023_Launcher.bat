@@ -2,13 +2,14 @@ rem \---- Repo location
 set REPO_PATH=%~dp0
 
 REM \---- Env Type
-set CURRENT_ENV=prod
+set CURRENT_ENV=dev
 
 rem \---- Virtual env site-packages
 set SITE_PACKAGES=%REPO_PATH%sitepackages
 
 rem \---- Python Tools Root
-set PYTHONROOT=%REPO_PATH%src\tools
+@REM set PYTHONROOT=%REPO_PATH%src\tools
+set PYTHONROOT=%REPO_PATH%
 
 rem \---- MEL root
 set MAYA_SCRIPT_PATH=%REPO_PATH%src\mel
@@ -45,11 +46,11 @@ set MAYA_PROJECT="%DCC_FOLDER%CG"
 
 for %%I in ("%~dp0..") do (
     set "parent_dir=%%~fI"
-    set "MAYA_PROJECT=%%~fI\Maya"
+    set "MAYA_PROJECT=%%~fI\CG"
 )
 
 rem \---- Start Maya - Leaves a cmd prompt window open. Feel free to close.
 for /f "tokens=2*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Autodesk\Maya\2023\Setup\InstallPath" /v MAYA_INSTALL_LOCATION') do set "MAYA_LOCATION=%%~b"
-"%MAYA_LOCATION%\bin\maya.exe" %*
+start "" /b "%MAYA_LOCATION%\bin\maya.exe" %*
 
 exit 0
