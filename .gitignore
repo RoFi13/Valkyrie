@@ -366,3 +366,7 @@ coverage.xml
 
 # Exclude venv files
 .venv/
+
+# Include flake8 and pylint settings
+!.pylintrc
+!.flake8
