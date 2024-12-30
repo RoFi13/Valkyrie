@@ -1,8 +1,8 @@
 val_asset_loader @ git+https://RoFi@github.com/RoFi13/val_asset_loader@v1.0.0
-val_asset_manager @ git+https://RoFi@github.com/RoFi13/val_asset_manager@v1.0.0
-val_core @ git+https://RoFi@github.com/RoFi13/val_core@v1.0.1
-val_maya_menu @ git+https://RoFi@github.com/RoFi13/val_maya_menu@v1.0.0
-val_util_tools @ git+https://RoFi@github.com/RoFi13/val_util_tools@v1.0.0
+val_asset_manager @ git+https://RoFi@github.com/RoFi13/val_asset_manager@v1.0.1
+val_core @ git+https://RoFi@github.com/RoFi13/val_core@v1.0.2
+val_maya_menu @ git+https://RoFi@github.com/RoFi13/val_maya_menu@v1.0.1
+val_util_tools @ git+https://RoFi@github.com/RoFi13/val_util_tools@v1.0.1
 p4python==2023.1.2477632
 pyperclip==1.9.0
 PySide2==5.15.2.1
