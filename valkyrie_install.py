@@ -4,13 +4,14 @@ import argparse
 from enum import Enum
 import logging
 import os
-from pathlib import Path
+from pathlib import Path, PurePath
 import shutil
 import subprocess
 import re
 import sys
 
 LOG = logging.getLogger(os.path.basename(__file__))
+CURRENT_DIRECTORY = PurePath(__file__).parent
 
 
 class BuildMode(Enum):
@@ -29,6 +30,10 @@ def process_line(line, mode: BuildMode = BuildMode.DEPLOY) -> None:
     match_found = re.search(
         r"git\+https://RoFi@github\.com/RoFi13/[\w-]+@v[\d]+\.[\d]+\.[\d]+", line
     )
+    sitepackages_directory = PurePath(CURRENT_DIRECTORY, "sitepackages").as_posix()
+    if not os.path.exists(sitepackages_directory):
+        os.mkdir(sitepackages_directory)
+
     if not match_found:
         sys.stdout.write(
             "Line isn't a valid Valkyrie github URL. Treating package as a normal "
