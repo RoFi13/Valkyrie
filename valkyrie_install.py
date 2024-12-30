@@ -1,5 +1,7 @@
 """Installer for downloading all Valkyrie Pipeline requirements."""
 
+import argparse
+from enum import Enum
 import logging
 import os
 from pathlib import Path
@@ -11,15 +13,21 @@ import sys
 LOG = logging.getLogger(os.path.basename(__file__))
 
 
-def process_line(line) -> None:
+class BuildMode(Enum):
+    """The style of execution to run."""
+
+    DEV = 0
+    DEPLOY = 1
+
+
+def process_line(line, mode: BuildMode = BuildMode.DEPLOY) -> None:
     """Process each requirements line and clone only github Valkyrie packages."""
     line = line.strip()
     sys.stdout.write(f"Processing line: {line}...\n")
 
     # Check if the line matches the pattern for a Git repository
     match_found = re.search(
-        r"git\+https://RoFi@github\.com/RoFi13/[\w-]+@v[\d]+\.[\d]+\.[\d]+",
-        line,
+        r"git\+https://RoFi@github\.com/RoFi13/[\w-]+@v[\d]+\.[\d]+\.[\d]+", line
     )
     if not match_found:
         sys.stdout.write(
@@ -34,9 +42,7 @@ def process_line(line) -> None:
     organization_name = line.split("/")[3]
     package_name = line.split("/")[4].split("@")[0]
     version_tag = line.split("@")[-1]
-    package_url = (
-        f"https://RoFi@github.com/{organization_name}/{package_name}"
-    )
+    package_url = f"https://RoFi@github.com/{organization_name}/{package_name}"
 
     sys.stdout.write(f"Package URL: {package_url}\n")
     sys.stdout.write(f"Package Name: {package_name}\n")
@@ -64,20 +70,47 @@ def process_line(line) -> None:
     )
 
     # Remove .git directory
-    if os.path.exists(f"{package_path}\\.git"):
-        sys.stdout.write(f"Found .git folder. Deleting... {package_path}\\.git\n")
-        subprocess.run(
-            ["rmdir", "/s", "/q", f"{package_path}\\.git"], shell=True, check=True
-        )
+    if mode == BuildMode.DEPLOY:
+        sys.stdout.write("IS FOR DEPLOYMENT!!")
+        if os.path.exists(f"{package_path}\\.git"):
+            sys.stdout.write(f"Found .git folder. Deleting... {package_path}\\.git\n")
+            subprocess.run(
+                ["rmdir", "/s", "/q", f"{package_path}\\.git"], shell=True, check=True
+            )
 
 
-def main():
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description=(
+            "Installer to help with automatically cloning remote git repos that "
+            "the Valkyrie Pipeline requires."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+
+    parser.add_argument(
+        "-m",
+        "--mode",
+        choices=["dev", "deploy"],
+        default="deploy",
+        help=(
+            "Mode to determine whether or not to keep the .git folders of the "
+            "required repositories."
+        ),
+    )
+
+    args = parser.parse_args(argv)
+
+    selected_mode = BuildMode.DEPLOY
+    if args.mode == "dev":
+        selected_mode = BuildMode.DEV
+
     """Clone all Valkyrie pipeline required github packages."""
     sys.stdout.write("Downloading Valkyrie required Packages...\n")
     with open("requirements.txt", "r", encoding="utf-8") as file:
         lines = file.readlines()
         for line in lines:
-            process_line(line)
+            process_line(line, selected_mode)
 
     sys.stdout.write("Packages installed.\n")
 
